@@ -5,7 +5,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 
 ## Warning
 
-**This tool is based on patching the game executable though hex-edits. However it is done in a safe and non-destructive way, that ensures the patched executable is never run with EAC. Use at your own risk!** 
+**This tool is based on patching the game executable though hex-edits. However it is done in a safe and non-destructive way, that ensures the patched executable is never run with EAC enabled. Use at your own risk!** 
 
 ## Features
 
