@@ -26,9 +26,9 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 
 ### Windows
 
-It should work on windows, just as well. The only difference is, that you need to run the script via your python 3 installation. Depending on the version of python 3 you have installed you would need a slightly different path than shown in the following example.
+It also work just as well on windows. The only difference is, that you need to run the script via your Python 3 installation. The following launch option line works in case you installed Python from Microsoft Store:
 
-Example: `C:\Program Files\Python36\python.exe er-patcher --rate 165 -uv -- %command%`
+> `python er-patcher --rate 165 -uv -- %command%`
 
 ## How it works
 
