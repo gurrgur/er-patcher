@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+
+
+import os
+import sys
+import subprocess
+import argparse
+from pathlib import Path
+import struct
+import code
+
+
+if __name__ == "__main__":
+
+    patcher_args = sys.argv[1:sys.argv.index("--")]
+    
+    parser = argparse.ArgumentParser(description="Patch Elden Ring executable and launch it without EAC.")
+    parser.add_argument("-r", "--rate", type=int, default=60, help="Modify the frame rate limit (e.g. 30, 120, 165 or whatever).")
+    parser.add_argument("-u", "--ultrawide", action=argparse.BooleanOptionalAction, help="Removes black bars when using a resolution with an aspect ratio other than 16:9.")
+    parser.add_argument("-v", "--disable-vigniette", action=argparse.BooleanOptionalAction, help="Disables the vigniette overlay.")
+    patch = parser.parse_args(patcher_args)
+
+    with open(Path("eldenring.exe"), "rb") as f:
+        exe = f.read()
+    exe_hex = exe.hex()
+
+    if patch.rate != 60 and patch.rate > 0:
+        exe_hex = exe_hex.replace(
+            "c743208988883ceb43897318ebca897318",
+            "c743208988883ceb43897318ebca897318".replace(
+                "8988883c", struct.pack('<f', 1 / patch.rate).hex()
+            )
+        )
+
+    if patch.ultrawide:
+        exe_hex = exe_hex.replace(
+            "8b0185c07442448b5904",
+            "8b0185c0eb42448b5904"
+        )
+
+    if patch.disable_vigniette:
+        exe_hex = exe_hex.replace(
+            "f30f590514a76e01f3440f5cc8f3450f5ecb",
+            "f30f590524b56e01f3440f5cc8f3450f5ecb"
+        )
+
+    patched_exe = bytes.fromhex(exe_hex)
+    patched_exe_path = Path("eldenring.patched.exe")
+    with open(patched_exe_path, "wb") as f:
+        f.write(patched_exe)
+
+    # start patched exe directly to avoid EAC
+    steam_cmd = sys.argv[1 + sys.argv.index("--"):]
+    steam_cmd[-1] = steam_cmd[-1].replace("start_protected_game", "eldenring.patched")
+    subprocess.run(steam_cmd)
+
+    os.remove(patched_exe_path)
