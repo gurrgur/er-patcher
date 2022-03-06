@@ -17,7 +17,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
   - `-u` or `--ultrawide` for removing black bars
   - `-v` or `--vigniette` for removing the vigniette overlay
   - Example: `./er-patcher --rate 30 -uv -- %command%`
-  - Example with mangohud and wine fullscreen fsr: `./er-patcher --rate 144 -ucv -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
+  - Example with mangohud and wine fullscreen fsr: `./er-patcher --rate 144 -uv -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
 3. Launch the game through steam. `er-patcher` automatically launches a patched version of `eldenring.exe` with EAC disabled.
 
 ### Windows
