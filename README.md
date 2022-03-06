@@ -3,6 +3,10 @@
 
 A tool aimed at enhancing the experience when playing the game on linux through proton.
 
+## Warning
+
+**This tool is based on patching the game executable though hex-edits. However it is done in a safe and non-destructive way that ensures, that the patched executable is never run with EAC. Use at your own risk!** 
+
 ## Features
 
 - set custom frame time limits (e.g. 30, 90, 165, ...)
