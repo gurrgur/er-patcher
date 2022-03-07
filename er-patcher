@@ -16,6 +16,7 @@ if __name__ == "__main__":
     parser.add_argument("-r", "--rate", type=int, default=60, help="Modify the frame rate limit (e.g. 30, 120, 165 or whatever).")
     parser.add_argument("-u", "--ultrawide", action=argparse.BooleanOptionalAction, help="Removes black bars when using a resolution with an aspect ratio other than 16:9.")
     parser.add_argument("-v", "--disable-vigniette", action=argparse.BooleanOptionalAction, help="Disables the vigniette overlay.")
+    parser.add_argument("-c", "--disable-ca", action=argparse.BooleanOptionalAction, help="Disables chromatic abberation.")
     patch = parser.parse_args(patcher_args)
 
     exe_name = Path("eldenring.exe")
@@ -42,6 +43,11 @@ if __name__ == "__main__":
             "f30f590514a76e01f3440f5cc8f3450f5ecb",
             "f30f590524b56e01f3440f5cc8f3450f5ecb"
         )
+
+    if patch.disable_ca:
+        ca_addr = 94 + exe_hex.index("0f114360488d8b800000000f1087a00000000f1141f0488d87b00000000f10080f1109")
+        if exe_hex[ca_addr:ca_addr + 8] == "0f114920":
+            exe_hex = exe_hex[:ca_addr] + "660fefc9" + exe_hex[ca_addr + 8:]  # PXOR XMM1,XMM1
     
     patched_exe_dir = Path("./er-patcher-tmp")
     if not patched_exe_dir.is_dir():

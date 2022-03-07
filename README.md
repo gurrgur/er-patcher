@@ -20,15 +20,16 @@ A tool aimed at enhancing the experience when playing the game on linux through 
   - `-r RATE` or `--rate RATE` for setting a custom framerate cap (default: 60)
   - `-u` or `--ultrawide` for removing black bars
   - `-v` or `--disable-vigniette` for removing the vigniette overlay
-  - Example: `./er-patcher --rate 30 -uv -- %command%`
-  - Example with mangohud and wine fullscreen fsr: `./er-patcher --rate 144 -uv -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
+  - `-c` or `--disable-ca` for disabling chromatic abberation
+  - Example: `./er-patcher --rate 30 -uvc -- %command%`
+  - Example with mangohud and wine fullscreen fsr: `./er-patcher --rate 144 -uvc -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
 3. Launch the game through steam. `er-patcher` automatically launches a patched version of `eldenring.exe` with EAC disabled.
 
 ### Windows
 
 It also work just as well on windows. The only difference is, that you need to run the script via your Python 3 installation. The following launch option line works in case you installed Python from Microsoft Store:
 
-> `python er-patcher --rate 165 -uv -- %command%`
+> `python er-patcher --rate 165 -uvc -- %command%`
 
 ## How it works
 
