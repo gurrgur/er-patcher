@@ -32,4 +32,4 @@ It also work just as well on windows. The only difference is, that you need to r
 
 ## How it works
 
-When the game is launched through steam, the tool creates a patched version of `eldenring.exe` called `eldenring.patched.exe` while leaving the original intact. The tool then modifies the steam launch command by replacing the string `start_protected_game.exe` with `eldenring.patched.exe` so that the patched exe is always run without EAC. After the game is closed, `eldenring.patched.exe` is deleted.
+When the game is launched through steam, the tool creates a patched version of `eldenring.exe` in a temporary subdirectory while leaving the original intact. The tool then modifies the steam launch command to launch the patched executable instead of `start_protected_game.exe`. This ensures that the patched exe is never run with EAC enabled. After the game is closed, the patched executable is removed.
