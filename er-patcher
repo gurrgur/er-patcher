@@ -17,6 +17,7 @@ if __name__ == "__main__":
     parser.add_argument("-u", "--ultrawide", action=argparse.BooleanOptionalAction, help="Removes black bars when using a resolution with an aspect ratio other than 16:9.")
     parser.add_argument("-v", "--disable-vigniette", action=argparse.BooleanOptionalAction, help="Disables the vigniette overlay.")
     parser.add_argument("-c", "--disable-ca", action=argparse.BooleanOptionalAction, help="Disables chromatic abberation.")
+    parser.add_argument("-a", "--increase-animation-distance", action=argparse.BooleanOptionalAction, help="Increase animation distance.")
     patch = parser.parse_args(patcher_args)
 
     exe_name = Path("eldenring.exe")
@@ -48,6 +49,13 @@ if __name__ == "__main__":
         ca_addr = 94 + exe_hex.index("0f114360488d8b800000000f1087a00000000f1141f0488d87b00000000f10080f1109")
         if exe_hex[ca_addr:ca_addr + 8] == "0f114920":
             exe_hex = exe_hex[:ca_addr] + "660fefc9" + exe_hex[ca_addr + 8:]  # PXOR XMM1,XMM1
+
+    if patch.increase_animation_distance:
+        # DIVSS XMM1,dword ptr [R12 + 0x54] -> XORPS XMM1,XMM1; PXOR XMM1,XMM1
+        exe_hex = exe_hex.replace(
+            "e82b309c010f28f80f28c6e820359c01f30f5ef80f28cff3410f5e4c2454",
+            "e82b309c010f28f80f28c6e820359c01f30f5ef80f28cf0f57c9660fefc9"
+        )
     
     patched_exe_dir = Path("./er-patcher-tmp")
     if not patched_exe_dir.is_dir():
