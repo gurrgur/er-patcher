@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 
-
 import os
 import sys
 import subprocess
 import argparse
 from pathlib import Path
 import struct
-import code
 
 
 if __name__ == "__main__":
@@ -20,7 +18,8 @@ if __name__ == "__main__":
     parser.add_argument("-v", "--disable-vigniette", action=argparse.BooleanOptionalAction, help="Disables the vigniette overlay.")
     patch = parser.parse_args(patcher_args)
 
-    with open(Path("eldenring.exe"), "rb") as f:
+    exe_name = Path("eldenring.exe")
+    with open(exe_name, "rb") as f:
         exe = f.read()
     exe_hex = exe.hex()
 
@@ -43,15 +42,18 @@ if __name__ == "__main__":
             "f30f590514a76e01f3440f5cc8f3450f5ecb",
             "f30f590524b56e01f3440f5cc8f3450f5ecb"
         )
+    
+    patched_exe_dir = Path("./er-patcher-tmp")
+    if not patched_exe_dir.is_dir():
+        patched_exe_dir.mkdir()
 
-    patched_exe = bytes.fromhex(exe_hex)
-    patched_exe_path = Path("eldenring.patched.exe")
-    with open(patched_exe_path, "wb") as f:
-        f.write(patched_exe)
+    with open(patched_exe_dir / exe_name, "wb") as f:
+        f.write(bytes.fromhex(exe_hex))
 
     # start patched exe directly to avoid EAC
     steam_cmd = sys.argv[1 + sys.argv.index("--"):]
-    steam_cmd[-1] = steam_cmd[-1].replace("start_protected_game", "eldenring.patched")
+    steam_cmd[-1] = Path(steam_cmd[-1]).parent.absolute() / patched_exe_dir / exe_name
     subprocess.run(steam_cmd)
 
-    os.remove(patched_exe_path)
+    os.remove(patched_exe_dir / exe_name)
+    os.rmdir(patched_exe_dir)
