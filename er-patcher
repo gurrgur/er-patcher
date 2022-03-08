@@ -18,6 +18,7 @@ if __name__ == "__main__":
     parser.add_argument("-v", "--disable-vigniette", action=argparse.BooleanOptionalAction, help="Disables the vigniette overlay.")
     parser.add_argument("-c", "--disable-ca", action=argparse.BooleanOptionalAction, help="Disables chromatic abberation.")
     parser.add_argument("-a", "--increase-animation-distance", action=argparse.BooleanOptionalAction, help="Increase animation distance.")
+    parser.add_argument("-f", "--remove-60hz-fullscreen", action=argparse.BooleanOptionalAction, help="Remove 60hz lock in fullscreen.")
     patch = parser.parse_args(patcher_args)
 
     exe_name = Path("eldenring.exe")
@@ -57,6 +58,12 @@ if __name__ == "__main__":
             "e82b309c010f28f80f28c6e820359c01f30f5ef80f28cf0f57c9660fefc9"
         )
     
+    if patch.remove_60hz_fullscreen:
+        exe_hex = exe_hex.replace(
+            "c745ef3c000000",
+            "c745ef00000000"
+        )
+        
     patched_exe_dir = Path("./er-patcher-tmp")
     if not patched_exe_dir.is_dir():
         patched_exe_dir.mkdir()
