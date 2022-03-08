@@ -1,7 +1,7 @@
 # Elden Ring Proton Patcher
 
 
-A tool aimed at enhancing the experience when playing the game on linux through proton.
+A tool aimed at enhancing the experience when playing the game on linux through proton or natively on windows.
 
 ## Warning
 
@@ -9,7 +9,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 
 ## Features
 
-- set custom frame time limits (e.g. 30, 90, 165, ...)
+- set custom frame rate limits (e.g. 30, 90, 165, ...)
 - remove black borders when using resolutions with an aspect ratio other than 16:9 (e.g. ultrawide).
 - remove vigniette overlay
 - remove chromatic abberation filter
