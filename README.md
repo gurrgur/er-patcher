@@ -10,8 +10,11 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 ## Features
 
 - set custom frame time limits (e.g. 30, 90, 165, ...)
-- disable black borders when using resolutions with an aspect ratio other than 16:9 (e.g. ultrawide).
-- vigniette removal
+- remove black borders when using resolutions with an aspect ratio other than 16:9 (e.g. ultrawide).
+- remove vigniette overlay
+- remove chromatic abberation filter
+- increase animation distance / fix choppy animations at screen edges
+- remove 60hz limit when using fullscreen mode
 
 ## Usage
 
@@ -22,6 +25,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
   - `-v` or `--disable-vigniette` for removing the vigniette overlay
   - `-c` or `--disable-ca` for disabling chromatic abberation
   - `-a` or `--increase-animation-distance` for fixing low frame rate animations at screen edges or for distant entities.
+  - `-f` or `--remove-60hz-fullscreen` for removing the 60Hz limit in fullscreen mode (only applies to windows and has no effect when running the game through proton due to fshack) 
   - Example: `./er-patcher --rate 30 -uavc -- %command%`
   - Example with mangohud and wine fullscreen fsr: `./er-patcher --rate 144 -uvca -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
 3. Launch the game through steam. `er-patcher` automatically launches a patched version of `eldenring.exe` with EAC disabled.
@@ -30,7 +34,9 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 
 It also work just as well on windows. The only difference is, that you need to run the script via your Python 3 installation. The following launch option line works in case you installed Python from Microsoft Store:
 
-> `python er-patcher --rate 165 -uvca -- %command%`
+> `python er-patcher --rate 165 -uvcaf -- %command%`
+
+Note: This spawns a python console which will close by itself after the game has finished running. If you find this annoying you can try using `pythonw` instead. In any case `python` needs to be in PATH for windows to find it.
 
 ## How it works
 
