@@ -25,6 +25,13 @@ if __name__ == "__main__":
     patch = parser.parse_args(patcher_args)
 
     exe_name = Path("eldenring.exe")
+
+    # If the script is in the same directory as eldenring.exe, assume that is the game directory.
+    # Otherwise, assume we are already in the game directory.
+    script_dir = Path(os.path.dirname(os.path.realpath(__file__)))
+    if (script_dir / exe_name).exists():
+        os.chdir(script_dir)
+
     with open(exe_name, "rb") as f:
         exe_hex = f.read().hex()
 
