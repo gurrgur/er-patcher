@@ -23,8 +23,7 @@ if __name__ == "__main__":
 
     exe_name = Path("eldenring.exe")
     with open(exe_name, "rb") as f:
-        exe = f.read()
-    exe_hex = exe.hex()
+        exe_hex = f.read().hex()
 
     if patch.rate != 60 and patch.rate > 0:
         exe_hex = exe_hex.replace(
@@ -70,6 +69,8 @@ if __name__ == "__main__":
 
     with open(patched_exe_dir / exe_name, "wb") as f:
         f.write(bytes.fromhex(exe_hex))
+
+    del exe_hex
 
     # start patched exe directly to avoid EAC
     steam_cmd = sys.argv[1 + sys.argv.index("--"):]
