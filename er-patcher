@@ -10,7 +10,10 @@ import struct
 
 if __name__ == "__main__":
 
-    patcher_args = sys.argv[1:sys.argv.index("--")]
+    if "--" in sys.argv:
+        patcher_args = sys.argv[1:sys.argv.index("--")]
+    else:
+        patcher_args = sys.argv[1:]
     
     parser = argparse.ArgumentParser(description="Patch Elden Ring executable and launch it without EAC.")
     parser.add_argument("-r", "--rate", type=int, default=60, help="Modify the frame rate limit (e.g. 30, 120, 165 or whatever).")
@@ -73,7 +76,10 @@ if __name__ == "__main__":
     del exe_hex
 
     # start patched exe directly to avoid EAC
-    steam_cmd = sys.argv[1 + sys.argv.index("--"):]
+    if "--" in sys.argv:
+        steam_cmd = sys.argv[1 + sys.argv.index("--"):]
+    else:
+        steam_cmd = [exe_name]
     steam_cmd[-1] = Path(steam_cmd[-1]).parent.absolute() / patched_exe_dir / exe_name
     subprocess.run(steam_cmd)
 
