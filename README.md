@@ -16,6 +16,10 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 - increase animation distance / fix choppy animations at screen edges
 - remove 60hz limit when using fullscreen mode
 
+# Dependencies
+
+- Python >= 3.9 
+
 ## Usage
 
 1. Copy the file `er-patcher` to the game directory.
