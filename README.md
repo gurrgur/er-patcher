@@ -16,7 +16,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 - increase animation distance / fix choppy animations at screen edges
 - remove 60hz limit when using fullscreen mode
 
-# Dependencies
+## Dependencies
 
 - Python >= 3.9 
 
