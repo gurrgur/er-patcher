@@ -6,6 +6,7 @@ import subprocess
 import argparse
 from pathlib import Path
 import struct
+import re
 
 
 if __name__ == "__main__":
@@ -40,10 +41,11 @@ if __name__ == "__main__":
         )
 
     if patch.disable_vigniette:
-        exe_hex = exe_hex.replace(
-            "f30f590514a76e01f3440f5cc8f3450f5ecb",
-            "f30f590524b56e01f3440f5cc8f3450f5ecb"
-        )
+        v_pattern = 'f3 0f 10 .. .. f3 0f 59 .. .. .. .. .. e8 .. .. .. .. f3 41 0f .. .. f3 45 0f .. .. 4c 8d .. .. .. .. .. .. 48'.replace(" ", "")
+        v_addr = re.search(v_pattern, exe_hex).span()[0]
+        v_offset = 46
+        v_patch = "f3 0f 5c c0 90".replace(" ", "")  # SUBSS XMM0,XMM0; NOP;  all NOP does work too
+        exe_hex = exe_hex[:v_addr + v_offset] + v_patch + exe_hex[v_addr + v_offset + len(v_patch):]
 
     if patch.disable_ca:
         ca_addr = 94 + exe_hex.index("0f114360488d8b800000000f1087a00000000f1141f0488d87b00000000f10080f1109")
