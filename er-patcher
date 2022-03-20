@@ -81,4 +81,3 @@ if __name__ == "__main__":
 
     os.remove(patched_exe_dir / exe_name)
     os.rmdir(patched_exe_dir)
-    
