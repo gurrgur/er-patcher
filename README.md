@@ -18,7 +18,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 
 ## Dependencies
 
-- Python >= 3.9 
+- Python >= 3.8.xx (lowest tested)
 
 ## Usage
 
