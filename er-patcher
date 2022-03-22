@@ -15,11 +15,11 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description="Patch Elden Ring executable and launch it without EAC.")
     parser.add_argument("-r", "--rate", type=int, default=60, help="Modify the frame rate limit (e.g. 30, 120, 165 or whatever).")
-    parser.add_argument("-u", "--ultrawide", action=argparse.BooleanOptionalAction, help="Removes black bars when using a resolution with an aspect ratio other than 16:9.")
-    parser.add_argument("-v", "--disable-vigniette", action=argparse.BooleanOptionalAction, help="Disables the vigniette overlay.")
-    parser.add_argument("-c", "--disable-ca", action=argparse.BooleanOptionalAction, help="Disables chromatic abberation.")
-    parser.add_argument("-a", "--increase-animation-distance", action=argparse.BooleanOptionalAction, help="Increase animation distance.")
-    parser.add_argument("-f", "--remove-60hz-fullscreen", action=argparse.BooleanOptionalAction, help="Remove 60hz lock in fullscreen.")
+    parser.add_argument("-u", "--ultrawide", action='store_true', help="Removes black bars when using a resolution with an aspect ratio other than 16:9.")
+    parser.add_argument("-v", "--disable-vigniette", action='store_true', help="Disables the vigniette overlay.")
+    parser.add_argument("-c", "--disable-ca", action='store_true', help="Disables chromatic abberation.")
+    parser.add_argument("-a", "--increase-animation-distance", action='store_true', help="Increase animation distance.")
+    parser.add_argument("-f", "--remove-60hz-fullscreen", action='store_true', help="Remove 60hz lock in fullscreen.")
     patch = parser.parse_args(patcher_args)
 
     exe_name = Path("eldenring.exe")
