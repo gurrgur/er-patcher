@@ -29,6 +29,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
   - `-v` or `--disable-vigniette` for removing the vigniette overlay
   - `-c` or `--disable-ca` for disabling chromatic abberation
   - `-a` or `--increase-animation-distance` for fixing low frame rate animations at screen edges or for distant entities.
+  - `-s` or `--skip-intro` for skipping intro logos when the game starts
   - `-f` or `--remove-60hz-fullscreen` for removing the 60Hz limit in fullscreen mode (only applies to windows and has no effect when running the game through proton due to fshack) 
   - Example: `./er-patcher --rate 30 -uavc -- %command%`
   - Example with mangohud and wine fullscreen fsr: `./er-patcher --rate 144 -uvca -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
