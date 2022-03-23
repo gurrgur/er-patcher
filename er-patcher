@@ -14,7 +14,9 @@ if __name__ == "__main__":
     patcher_args = sys.argv[1:sys.argv.index("--")]
     
     parser = argparse.ArgumentParser(description="Patch Elden Ring executable and launch it without EAC.")
+    
     parser.add_argument("-r", "--rate", type=int, default=60, help="Modify the frame rate limit (e.g. 30, 120, 165 or whatever).")
+    parser.add_argument("--all", action='store_true', help="Enable all options except rate adjustment.")
     parser.add_argument("-u", "--ultrawide", action='store_true', help="Removes black bars when using a resolution with an aspect ratio other than 16:9.")
     parser.add_argument("-v", "--disable-vigniette", action='store_true', help="Disables the vigniette overlay.")
     parser.add_argument("-c", "--disable-ca", action='store_true', help="Disables chromatic abberation.")
@@ -35,38 +37,38 @@ if __name__ == "__main__":
             )
         )
 
-    if patch.ultrawide:
+    if patch.ultrawide or patch.all:
         exe_hex = exe_hex.replace(
             "8b0185c07442448b5904",
             "8b0185c0eb42448b5904"
         )
 
-    if patch.disable_vigniette:
+    if patch.disable_vigniette or patch.all:
         v_pattern = 'f3 0f 10 .. .. f3 0f 59 .. .. .. .. .. e8 .. .. .. .. f3 41 0f .. .. f3 45 0f .. .. 4c 8d .. .. .. .. .. .. 48'.replace(" ", "")
         v_addr = re.search(v_pattern, exe_hex).span()[0]
         v_offset = 46
         v_patch = "f3 0f 5c c0 90".replace(" ", "")  # SUBSS XMM0,XMM0; NOP;  all NOP does work too
         exe_hex = exe_hex[:v_addr + v_offset] + v_patch + exe_hex[v_addr + v_offset + len(v_patch):]
 
-    if patch.disable_ca:
+    if patch.disable_ca or patch.all:
         ca_addr = 94 + exe_hex.index("0f114360488d8b800000000f1087a00000000f1141f0488d87b00000000f10080f1109")
         if exe_hex[ca_addr:ca_addr + 8] == "0f114920":
             exe_hex = exe_hex[:ca_addr] + "660fefc9" + exe_hex[ca_addr + 8:]  # PXOR XMM1,XMM1
 
-    if patch.increase_animation_distance:
+    if patch.increase_animation_distance or patch.all:
         # DIVSS XMM1,dword ptr [R12 + 0x54] -> XORPS XMM1,XMM1; PXOR XMM1,XMM1
         exe_hex = exe_hex.replace(
             "e82b309c010f28f80f28c6e820359c01f30f5ef80f28cff3410f5e4c2454",
             "e82b309c010f28f80f28c6e820359c01f30f5ef80f28cf0f57c9660fefc9"
         )
 
-    if patch.skip_intro:
+    if patch.skip_intro or patch.all:
         exe_hex = exe_hex.replace(
             "80 bf b8 00 00 00 00 74 53 48".replace(" ", ""),
             "80 bf b8 00 00 00 00 90 90 48".replace(" ", "")
         )
     
-    if patch.remove_60hz_fullscreen:
+    if patch.remove_60hz_fullscreen or patch.all:
         exe_hex = exe_hex.replace(
             "c745ef3c000000",
             "c745ef00000000"

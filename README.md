@@ -25,13 +25,14 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 1. Copy the file `er-patcher` to the game directory.
 2. In steam, set the game launch options to `./er-patcher ARGS -- %command%` where ARGS is replaced with a combination of
   - `-r RATE` or `--rate RATE` for setting a custom framerate cap (default: 60)
+  - `--all` for enabling all options except `--rate`
   - `-u` or `--ultrawide` for removing black bars
   - `-v` or `--disable-vigniette` for removing the vigniette overlay
   - `-c` or `--disable-ca` for disabling chromatic abberation
   - `-a` or `--increase-animation-distance` for fixing low frame rate animations at screen edges or for distant entities.
   - `-s` or `--skip-intro` for skipping intro logos when the game starts
   - `-f` or `--remove-60hz-fullscreen` for removing the 60Hz limit in fullscreen mode (only applies to windows and has no effect when running the game through proton due to fshack) 
-  - Example: `./er-patcher --rate 30 -uavc -- %command%`
+  - Example: `./er-patcher --all --rate 30 -- %command%`
   - Example with mangohud and wine fullscreen fsr: `./er-patcher --rate 144 -uvca -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
 3. Launch the game through steam. `er-patcher` automatically launches a patched version of `eldenring.exe` with EAC disabled.
 
@@ -39,7 +40,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 
 It also work just as well on windows. The only difference is, that you need to run the script via your Python 3 installation. The following launch option line works in case you installed Python from Microsoft Store:
 
-> `python er-patcher --rate 165 -uvcaf -- %command%`
+> `python er-patcher --rate 165 --all -- %command%`
 
 Note: This spawns a python console which will close by itself after the game has finished running. If you find this annoying you can try using `pythonw` instead. In any case `python` needs to be in PATH for windows to find it.
 
