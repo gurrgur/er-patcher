@@ -16,7 +16,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Patch Elden Ring executable and launch it without EAC.")
     
     parser.add_argument("-r", "--rate", type=int, default=60, help="Modify the frame rate limit (e.g. 30, 120, 165 or whatever).")
-    parser.add_argument("--all", action='store_true', help="Enable all options except rate adjustment.")
+    parser.add_argument("--fix-camera", action='store_true', help="Disable camera auto-rotation.")
+    parser.add_argument("--all", action='store_true', help="Enable all options except rate adjustment and gamplay changes like `--fix-camera`.")
     parser.add_argument("-u", "--ultrawide", action='store_true', help="Removes black bars when using a resolution with an aspect ratio other than 16:9.")
     parser.add_argument("-v", "--disable-vigniette", action='store_true', help="Disables the vigniette overlay.")
     parser.add_argument("-c", "--disable-ca", action='store_true', help="Disables chromatic abberation.")
@@ -36,6 +37,13 @@ if __name__ == "__main__":
                 "8988883c", struct.pack('<f', 1 / patch.rate).hex()
             )
         )
+
+    if patch.fix_camera:
+        cf_pattern = '0f 29 a6 .. .. .. .. 41 0f 28 cf'.replace(" ", "")
+        cf_addr = re.search(cf_pattern, exe_hex).span()[0]
+        cf_offset = 0
+        cf_patch = "90 90 90 90 90 90 90".replace(" ", "")
+        exe_hex = exe_hex[:cf_addr + cf_offset] + cf_patch + exe_hex[cf_addr + cf_offset + len(cf_patch):]
 
     if patch.ultrawide or patch.all:
         exe_hex = exe_hex.replace(
