@@ -25,13 +25,13 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 | --------------------------------------- | ---------------------------------------------------------------------------- |
 | `-r RATE` or `--rate RATE`              | Set a custom framerate limit (default: 60).                                  |
 | `--fix-camera`                          | Disable camera auto-rotation.                                                |
-| `--all`                                 | Enable all options except `--rate` and gameplay changes like `--fix-camera`. |
+| `--all`                                 | Enable all options except `--rate` and<br>gameplay changes like `--fix-camera`. |
 | `-u` or `--ultrawide`                   | Remove black bars.                                                           |
 | `-v` or `--disable-vigniette`           | Remove the vigniette overlay .                                               |
 | `-c` or `--disable-ca`                  | Disable chromatic abberation.                                                |
-| `-a` or `--increase-animation-distance` | Fix low frame rate animations at screen edges or for distant entities.       |
+| `-a` or `--increase-animation-distance` | Fix low frame rate animations at screen<br>edges or for distant entities.       |
 | `-s` or `--skip-intro`                  | Skip intro logos at game start.                                              |
-| `-f` or `--remove-60hz-fullscreen`      | Remove the 60Hz limit in fullscreen mode (not needed with proton).           |
+| `-f` or `--remove-60hz-fullscreen`      | Remove the 60Hz limit in fullscreen<br>mode (not needed with proton).           |
 
 
 ## Windows Support
