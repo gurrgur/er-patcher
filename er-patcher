@@ -107,7 +107,7 @@ if __name__ == "__main__":
         if f.name in ["eldenring.exe", "start_protected_game.exe", "er-patcher"]:
             continue 
         if not (game_dir_patched / f).is_file():
-             (game_dir_patched / f).hardlink_to(f)
+             f.link_to(game_dir_patched / f)
 
     # start patched exe directly to avoid EAC
     steam_cmd = sys.argv[1 + sys.argv.index("--"):]
