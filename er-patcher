@@ -65,11 +65,12 @@ if __name__ == "__main__":
             exe_hex = exe_hex[:ca_addr] + "660fefc9" + exe_hex[ca_addr + 8:]  # PXOR XMM1,XMM1
 
     if patch.increase_animation_distance or patch.all:
-        # DIVSS XMM1,dword ptr [R12 + 0x54] -> XORPS XMM1,XMM1; PXOR XMM1,XMM1
-        exe_hex = exe_hex.replace(
-            "e82b309c010f28f80f28c6e820359c01f30f5ef80f28cff3410f5e4c2454",
-            "e82b309c010f28f80f28c6e820359c01f30f5ef80f28cf0f57c9660fefc9"
-        )
+        iad_pattern = "e8 .. .. .. .. 0f 28 .. 0f 28 .. e8 .. .. .. .. f3 0f .. .. 0f 28 .. f3 41 0f 5e".replace(" ", "")
+        iad_addr = re.search(iad_pattern, exe_hex).span()[0]
+        iad_offset = 46
+        iad_patch = "0f 57 c9 66 0f ef c9".replace(" ", "") # DIVSS XMM1,dword ptr [R12 + 0x54] -> XORPS XMM1,XMM1; PXOR XMM1,XMM1
+        if exe_hex[iad_addr + iad_offset:iad_addr + iad_offset + len(iad_patch)] == "f3 41 0f 5e 4c 24 54".replace(" ", ""):
+            exe_hex = exe_hex[:iad_addr] + iad_patch + exe_hex[iad_addr + len(iad_patch):]
 
     if patch.skip_intro or patch.all:
         exe_hex = exe_hex.replace(
