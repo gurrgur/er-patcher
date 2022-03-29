@@ -58,7 +58,6 @@ if __name__ == "__main__":
         else:
             print("er-patcher: ultrawide pattern scan failed")
 
-
     if patch.disable_vigniette or patch.all:
         v_pattern = 'f3 0f 10 .. .. f3 0f 59 .. .. .. .. .. e8 .. .. .. .. f3 41 0f .. .. f3 45 0f .. .. 4c 8d .. .. .. .. .. .. 48'.replace(" ", "")
         if (res := re.search(v_pattern, exe_hex)) is not None:
