@@ -14,10 +14,12 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 ## Usage
 
 1. Copy the file `er-patcher` to the game directory.
-2. In steam, set the game launch options to `./er-patcher ARGS -- %command%` See [Features](#features) for available options.
-  - Example: `./er-patcher --all --rate 30 --fix-camera -- %command%`
-  - Example using [MangoHud](https://github.com/flightlessmango/MangoHud) and wine fullscreen FSR: `./er-patcher --rate 144 -uvca -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
+2. In steam, set the game launch options to `python er-patcher ARGS -- %command%` See [Features](#features) for available options.
+  - Example: `python er-patcher --all --rate 30 --fix-camera -- %command%`
+  - Example using [MangoHud](https://github.com/flightlessmango/MangoHud) and wine fullscreen FSR: `python er-patcher --rate 144 -uvca -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
 3. Launch the game through steam. `er-patcher` automatically launches a patched version of `eldenring.exe` with EAC disabled.
+
+Note: There might be some distros (e.g. older Ubuntu releases) that launch python 2 instead of 3 when running `python`. In that case you'll need to replace `python` with `python3` in the launch option line. 
 
 ## Features
 
@@ -36,7 +38,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 
 ## Windows Support
 
-The patcher works just as well on windows. The only difference is that you need to explicitly call python to run the script `er-patcher`. The following launch option line works in case you installed Python from Microsoft Store:
+The patcher works just as well on windows. The following launch option line works in case you e.g. installed Python from Microsoft Store:
 
 > `python er-patcher --rate 165 --all -- %command%`
 
