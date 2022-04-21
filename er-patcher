@@ -127,7 +127,7 @@ if __name__ == "__main__":
     # to handle but by default windows 10 doesn't allow them
     game_files = [f for f in game_dir.rglob("*") if f.is_file()]
     for f in game_files:
-        if f.name in ["eldenring.exe", "start_protected_game.exe", "er-patcher"]:
+        if f.name in ["eldenring.exe", "er-patcher"]:
             continue 
         if not (game_dir_patched / f).is_file():
              f.link_to(game_dir_patched / f)
