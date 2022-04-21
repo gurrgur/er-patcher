@@ -5,7 +5,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 
 ## Warning
 
-**This tool is based on patching the game executable through hex-edits. However it is done in a safe and non-destructive way, that ensures the patched executable is never run with EAC enabled. Use at your own risk!** 
+**This tool is based on patching the game executable through hex-edits. However it is done in a safe and non-destructive way, that ensures the patched executable is never run with EAC enabled (unless explicity told to do so). Use at your own risk!**
 
 ## Dependencies
 
@@ -47,7 +47,7 @@ Note: This spawns a python console which will close by itself after the game has
 
 ## How it works
 
-When the game is launched through steam, the tool creates a patched version of `eldenring.exe` in a temporary subdirectory while leaving the original intact. The tool then modifies the steam launch command to launch the patched executable instead of `start_protected_game.exe`. This ensures that the patched exe is never run with EAC enabled. After the game is closed, the patched executable is removed.
+When the game is launched through steam, the tool creates a patched version of `eldenring.exe` in a temporary subdirectory while leaving the original intact. As long the flag `--with-eac` is not set, the tool modifies the steam launch command to launch the patched executable instead of `start_protected_game.exe`, thefore ensuring that the patched exe is never run with EAC enabled. After the game is closed, the patched executable is removed.
 
 ## Credits
 
