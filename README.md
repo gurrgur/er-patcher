@@ -23,16 +23,17 @@ Note: There might be some distros (e.g. older Ubuntu releases) that launch pytho
 
 ## Features
 
-| Argument                                | Description                                                                  |
-| --------------------------------------- | ---------------------------------------------------------------------------- |
-| `-r RATE` or `--rate RATE`              | Set a custom framerate limit (default: 60).                                  |
-| `--fix-camera`                          | Disable camera auto-rotation.                                                |
+| Argument                                | Description                                                                     |
+| --------------------------------------- | ------------------------------------------------------------------------------- |
+| `-r RATE` or `--rate RATE`              | Set a custom framerate limit (default: 60).                                     |
+| `--with-eac`                            | Run game with EAC (Use at own your risk)                                        |
+| `--fix-camera`                          | Disable camera auto-rotation.                                                   |
 | `--all`                                 | Enable all options except `--rate` and<br>gameplay changes like `--fix-camera`. |
-| `-u` or `--ultrawide`                   | Remove black bars.                                                           |
-| `-v` or `--disable-vigniette`           | Remove the vigniette overlay .                                               |
-| `-c` or `--disable-ca`                  | Disable chromatic abberation.                                                |
+| `-u` or `--ultrawide`                   | Remove black bars.                                                              |
+| `-v` or `--disable-vigniette`           | Remove the vigniette overlay .                                                  |
+| `-c` or `--disable-ca`                  | Disable chromatic abberation.                                                   |
 | `-a` or `--increase-animation-distance` | Fix low frame rate animations at screen<br>edges or for distant entities.       |
-| `-s` or `--skip-intro`                  | Skip intro logos at game start.                                              |
+| `-s` or `--skip-intro`                  | Skip intro logos at game start.                                                 |
 | `-f` or `--remove-60hz-fullscreen`      | Remove the 60Hz limit in fullscreen<br>mode (not needed with proton).           |
 
 
