@@ -17,7 +17,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Patch Elden Ring executable and launch it without EAC.")
     
     parser.add_argument("-r", "--rate", type=int, default=60, help="Modify the frame rate limit (e.g. 30, 120, 165 or whatever).")
-    parser.add_argument("--with-eac", action='store_false', help="Run game with EAC (Use at own your risk)")
+    parser.add_argument("--with-eac", action='store_true', help="Run game with EAC (Use at own your risk)")
     parser.add_argument("--fix-camera", action='store_true', help="Disable camera auto-rotation.")
     parser.add_argument("--all", action='store_true', help="Enable all options except rate adjustment and gamplay changes like `--fix-camera`.")
     parser.add_argument("-u", "--ultrawide", action='store_true', help="Removes black bars when using a resolution with an aspect ratio other than 16:9.")
