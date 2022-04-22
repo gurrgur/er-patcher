@@ -5,7 +5,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 
 ## Warning
 
-**This tool is based on patching the game executable through hex-edits. However it is done in a safe and non-destructive way, that ensures the patched executable is never run with EAC enabled. Use at your own risk!** 
+**This tool is based on patching the game executable through hex-edits. However it is done in a safe and non-destructive way, that ensures the patched executable is never run with EAC enabled (unless explicity told to do so). Use at your own risk!**
 
 ## Dependencies
 
@@ -23,16 +23,17 @@ Note: There might be some distros (e.g. older Ubuntu releases) that launch pytho
 
 ## Features
 
-| Argument                                | Description                                                                  |
-| --------------------------------------- | ---------------------------------------------------------------------------- |
-| `-r RATE` or `--rate RATE`              | Set a custom framerate limit (default: 60).                                  |
-| `--fix-camera`                          | Disable camera auto-rotation.                                                |
+| Argument                                | Description                                                                     |
+| --------------------------------------- | ------------------------------------------------------------------------------- |
+| `-r RATE` or `--rate RATE`              | Set a custom framerate limit (default: 60).                                     |
+| `--with-eac`                            | Run game with EAC (Use at own your risk)                                        |
+| `--fix-camera`                          | Disable camera auto-rotation.                                                   |
 | `--all`                                 | Enable all options except `--rate` and<br>gameplay changes like `--fix-camera`. |
-| `-u` or `--ultrawide`                   | Remove black bars.                                                           |
-| `-v` or `--disable-vigniette`           | Remove the vigniette overlay .                                               |
-| `-c` or `--disable-ca`                  | Disable chromatic abberation.                                                |
+| `-u` or `--ultrawide`                   | Remove black bars.                                                              |
+| `-v` or `--disable-vigniette`           | Remove the vigniette overlay .                                                  |
+| `-c` or `--disable-ca`                  | Disable chromatic abberation.                                                   |
 | `-a` or `--increase-animation-distance` | Fix low frame rate animations at screen<br>edges or for distant entities.       |
-| `-s` or `--skip-intro`                  | Skip intro logos at game start.                                              |
+| `-s` or `--skip-intro`                  | Skip intro logos at game start.                                                 |
 | `-f` or `--remove-60hz-fullscreen`      | Remove the 60Hz limit in fullscreen<br>mode (not needed with proton).           |
 
 
@@ -46,7 +47,7 @@ Note: This spawns a python console which will close by itself after the game has
 
 ## How it works
 
-When the game is launched through steam, the tool creates a patched version of `eldenring.exe` in a temporary subdirectory while leaving the original intact. The tool then modifies the steam launch command to launch the patched executable instead of `start_protected_game.exe`. This ensures that the patched exe is never run with EAC enabled. After the game is closed, the patched executable is removed.
+When the game is launched through steam, the tool creates a patched version of `eldenring.exe` in a temporary subdirectory while leaving the original intact. As long the flag `--with-eac` is not set, the tool modifies the steam launch command to launch the patched executable instead of `start_protected_game.exe`, thefore ensuring that the patched exe is never run with EAC enabled. After the game is closed, the patched executable is removed.
 
 ## Credits
 
