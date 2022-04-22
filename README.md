@@ -26,7 +26,7 @@ Note: There might be some distros (e.g. older Ubuntu releases) that launch pytho
 | Argument                                | Description                                                                     |
 | --------------------------------------- | ------------------------------------------------------------------------------- |
 | `-r RATE` or `--rate RATE`              | Set a custom framerate limit (default: 60).                                     |
-| `--with-eac`                            | Run game with EAC (Use at own your risk)                                        |
+| `--with-eac`                            | Run game with EAC (Use it at your own risk)                                     |
 | `--fix-camera`                          | Disable camera auto-rotation.                                                   |
 | `--all`                                 | Enable all options except `--rate` and<br>gameplay changes like `--fix-camera`. |
 | `-u` or `--ultrawide`                   | Remove black bars.                                                              |
