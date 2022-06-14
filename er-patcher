@@ -51,9 +51,9 @@ if __name__ == "__main__":
             print("er-patcher: fix_camera pattern scan failed")
 
     if patch.ultrawide or patch.all:
-        uw_pattern = "74 50 .. 8b .. .. dc 03 00 00 .. 85 .. 74 .. .. 8b .. .. 0f af".replace(" ", "")
+        uw_pattern = "48 c7 45 b8 fe ff ff ff 48 89 58 10 48 89 70 18 48 89 78 20 0f 29 70 c8 48 8b".replace(" ", "")
         if (res := re.search(uw_pattern, exe_hex)) is not None:
-            uw_addr = res.span()[0]
+            uw_addr = res.span()[0] + 148
             uw_patch = "eb"
             exe_hex = exe_hex[:uw_addr] + uw_patch + exe_hex[uw_addr + len(uw_patch):]
         else:
