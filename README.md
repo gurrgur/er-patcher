@@ -26,7 +26,7 @@ Note: There might be some distros (older Ubuntu releases e.g.) that launch pytho
 | `-s` or `--skip-intro`                  | Skip intro logos on startup.                                                    |
 | `-f` or `--remove-60hz-fullscreen`      | Remove the 60 Hz limit in fullscreen<br>mode (unneeded with Proton).            |
 ## Windows support
-It works on Windows as well. The following launch option line works in case you installed Python from Microsoft Store e.g.:
+It works on Windows as well. The following launch option line works in case you installed Python from Microsoft Store, e.g.:
 > `python er-patcher --rate 165 --all -- %command%`
 
 Note: It spawns a python console which will close by itself after the game has stopped running. You can try using `pythonw` instead if you find it annoying. `python` needs to be in PATH for Windows to find it in any case.
@@ -34,10 +34,10 @@ Note: It spawns a python console which will close by itself after the game has s
 It creates a patched  `eldenring.exe` version in a temporary subdirectory while leaving the original intact when the game is launched with Steam. It modifies Steam's launch command to launch the patched executable instead of `start_protected_game.exe` if the flag `--with-eac` is not set, thefore ensuring that the patched exe is never run with EAC enabled. The patched executable is removed after the game is closed.
 ## Credits
 - [EldenRingFpsUnlockAndMore](https://github.com/uberhalit/EldenRingFpsUnlockAndMore)
-  - frame time limit adjustment
-  - black bar removal
+  - Frame time limit adjustment
+  - Black bar removal
 - [Flawless Widescreen](https://www.flawlesswidescreen.org)
-  - vignette & ca removal
-  - animation distance increase
+  - Vignette & ca removal
+  - Animation distance increase
 - [DarkSouls3RemoveIntroScreens](https://github.com/bladecoding/DarkSouls3RemoveIntroScreens): intro logo skip
 - [EldenRingMods](https://github.com/techiew/EldenRingMods) + [EldenRingFpsUnlockAndMore](https://github.com/uberhalit/EldenRingFpsUnlockAndMore): camera fix
