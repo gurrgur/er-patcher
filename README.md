@@ -8,7 +8,7 @@ A tool aimed at enhancing the experience when playing the game on Linux through 
 1. Copy the file `er-patcher` to the game directory.
 2. Set the game launch options to `python er-patcher ARGS -- %command%` in Steam. See [Features](#features) for available options.
 - Example: `python er-patcher --all --fix-camera -r 30 -- %command%`
-- Example using [MangoHud](https://github.com/flightlessmango/MangoHud) & Wine fullscreen FSR: `python er-patcher -r 144 -acuv -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
+- Example using [MangoHud](https://github.com/flightlessmango/MangoHud) & Wine fullscreen FSR: `python er-patcher -r 144 -acvu -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
 3. Launch the game with Steam. `er-patcher` automatically launches a patched `eldenring.exe` version with EAC disabled.
 
 Note: There might be some distros (e.g., older Ubuntu releases) that launch python 2 instead of 3 when running `python`. You will need to replace `python` by `python3` in the launch option line in that case.  
