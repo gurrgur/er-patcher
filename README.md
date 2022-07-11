@@ -7,24 +7,25 @@ A tool aimed at enhancing the experience when playing the game on Linux through 
 ## Usage
 1. Copy the file `er-patcher` to the game directory.
 2. Set the game launch options to `python er-patcher ARGS -- %command%` in Steam. See [Features](#features) for available options.
-- Example: `python er-patcher --all --rate 30 --fix-camera -- %command%`
-- Example using [MangoHud](https://github.com/flightlessmango/MangoHud) & Wine fullscreen FSR: `python er-patcher --rate 144 -uvca -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
+- Example: `python er-patcher --all --fix-camera -r 30 -- %command%`
+- Example using [MangoHud](https://github.com/flightlessmango/MangoHud) & Wine fullscreen FSR: `python er-patcher -r 144 -acuv -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
 3. Launch the game with Steam. `er-patcher` automatically launches a patched `eldenring.exe` version with EAC disabled.
 
-Note: There might be some distros (older Ubuntu releases e.g.) that launch python 2 instead of 3 when running `python`. You will need to replace `python` by `python3` in the launch option line in that case.  
+Note: There might be some distros (e.g., older Ubuntu releases) that launch python 2 instead of 3 when running `python`. You will need to replace `python` by `python3` in the launch option line in that case.  
 ## Features
 | Argument                                | Description                                                                     |
 | --------------------------------------- | ------------------------------------------------------------------------------- |
 | `--all`                                 | Enable all options but `--rate` &<br>gameplay changes, like `--fix-camera`.      |
 | `--fix-camera`                           | Remove camera auto-rotation.                                                    |
-| `-r RATE` or `--rate RATE`              | Set a custom frame rate limit (default: 60).                                    |
-| `--with-eac`                            | Run game with EAC (Use it at your own risk).                                    |
 | `-a` or `--increase-animation-distance` | Fix low frame rate animations at screen<br>edges or for distant entities.       |
-| `-c` or `--disable-ca`                  | Remove chromatic aberration.                                                    |
-| `-f` or `--remove-60hz-fullscreen`      | Remove the 60 Hz limit in fullscreen<br>mode (unneeded with Proton).            |
+| `-r RATE` or `--rate RATE`              | Set a custom frame rate limit (default: 60).                                    |
+| `-f` or `--remove-60-hz-fullscreen`     | Remove the 60 Hz limit in fullscreen<br>mode (unneeded with Proton).            |
+| `-c` or `--remove-ca`                   | Remove chromatic aberration.                                                    |
+| `-v` or `--remove-vignette`             | Remove the vignette overlay.                                                    |
 | `-s` or `--skip-intro`                  | Skip intro logos on startup.                                                    |
 | `-u` or `--ultrawide`                   | Remove black bars.                                                              |
-| `-v` or `--disable-vignette`            | Remove the vignette overlay.                                                    |
+| `--with-eac`                            | Run game with EAC (use it at your own risk).                                    |
+
 ## Windows support
 It works on Windows as well. The following launch option line works in case you installed Python from Microsoft Store, e.g.:
 > `python er-patcher --rate 165 --all -- %command%`
