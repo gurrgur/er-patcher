@@ -19,12 +19,12 @@ Note: There might be some distros (older Ubuntu releases e.g.) that launch pytho
 | `--fix-camera`                           | Remove camera auto-rotation.                                                    |
 | `-r RATE` or `--rate RATE`              | Set a custom frame rate limit (default: 60).                                    |
 | `--with-eac`                            | Run game with EAC (Use it at your own risk).                                    |
+| `-a` or `--increase-animation-distance` | Fix low frame rate animations at screen<br>edges or for distant entities.       |
+| `-c` or `--disable-ca`                  | Remove chromatic aberration.                                                    |
+| `-f` or `--remove-60hz-fullscreen`      | Remove the 60 Hz limit in fullscreen<br>mode (unneeded with Proton).            |
+| `-s` or `--skip-intro`                  | Skip intro logos on startup.                                                    |
 | `-u` or `--ultrawide`                   | Remove black bars.                                                              |
 | `-v` or `--disable-vignette`            | Remove the vignette overlay.                                                    |
-| `-c` or `--disable-ca`                  | Remove chromatic aberration.                                                    |
-| `-a` or `--increase-animation-distance` | Fix low frame rate animations at screen<br>edges or for distant entities.       |
-| `-s` or `--skip-intro`                  | Skip intro logos on startup.                                                    |
-| `-f` or `--remove-60hz-fullscreen`      | Remove the 60 Hz limit in fullscreen<br>mode (unneeded with Proton).            |
 ## Windows support
 It works on Windows as well. The following launch option line works in case you installed Python from Microsoft Store, e.g.:
 > `python er-patcher --rate 165 --all -- %command%`
@@ -34,10 +34,10 @@ Note: It spawns a python console which will close by itself after the game has s
 It creates a patched  `eldenring.exe` version in a temporary subdirectory while leaving the original intact when the game is launched with Steam. It modifies Steam's launch command to launch the patched executable instead of `start_protected_game.exe` if the flag `--with-eac` is not set, thefore ensuring that the patched exe is never run with EAC enabled. The patched executable is removed after the game is closed.
 ## Credits
 - [EldenRingFpsUnlockAndMore](https://github.com/uberhalit/EldenRingFpsUnlockAndMore)
-  - Frame time limit adjustment
   - Black bar removal
+  - Frame time limit adjustment
 - [Flawless Widescreen](https://www.flawlesswidescreen.org)
-  - Vignette & ca removal
   - Animation distance increase
+  - Vignette & ca removal
 - [DarkSouls3RemoveIntroScreens](https://github.com/bladecoding/DarkSouls3RemoveIntroScreens): intro logo skip
 - [EldenRingMods](https://github.com/techiew/EldenRingMods) + [EldenRingFpsUnlockAndMore](https://github.com/uberhalit/EldenRingFpsUnlockAndMore): camera fix
