@@ -18,8 +18,9 @@ if __name__ == "__main__":
     
     parser.add_argument("-r", "--rate", type=int, default=60, help="Modify the frame rate limit (e.g. 30, 120, 165 or whatever).")
     parser.add_argument("--with-eac", action='store_true', help="Run game with EAC (Use at own your risk)")
+    parser.add_argument("--disable-rune-loss", action='store_true', help="Disable losing runes upon death.")
     parser.add_argument("--fix-camera", action='store_true', help="Disable camera auto-rotation.")
-    parser.add_argument("--all", action='store_true', help="Enable all options except rate adjustment and gamplay changes like `--fix-camera`.")
+    parser.add_argument("--all", action='store_true', help="Enable all options except rate adjustment and gamplay changes like `--fix-camera` and `--disable-rune-loss`.")
     parser.add_argument("-u", "--ultrawide", action='store_true', help="Removes black bars when using a resolution with an aspect ratio other than 16:9.")
     parser.add_argument("-v", "--disable-vigniette", action='store_true', help="Disables the vigniette overlay.")
     parser.add_argument("-c", "--disable-ca", action='store_true', help="Disables chromatic abberation.")
@@ -49,6 +50,15 @@ if __name__ == "__main__":
             exe_hex = exe_hex[:cf_addr] + cf_patch + exe_hex[cf_addr + len(cf_patch):]
         else:
             print("er-patcher: fix_camera pattern scan failed")
+
+    if patch.disable_rune_loss:
+        rl_pattern = "b0 01 .. 8b .. e8 .. .. .. .. .. 8b .. .. .. 32 c0 .. 83 .. 28 c3".replace(" ", "")
+        if (res := re.search(rl_pattern, exe_hex)) is not None:
+            rl_addr = res.span()[0] + 6
+            rl_patch = "90 90 90 90 90".replace(" ", "") # NOP
+            exe_hex = exe_hex[:rl_addr] + rl_patch + exe_hex[rl_addr + len(rl_patch):]
+        else:
+            print("er-patcher: disable rune loss pattern scan failed")
 
     if patch.ultrawide or patch.all:
         uw_pattern = "74 4f 45 8b 94 cc".replace(" ", "")
