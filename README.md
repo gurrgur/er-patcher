@@ -23,18 +23,19 @@ Note: There might be some distros (e.g. older Ubuntu releases) that launch pytho
 
 ## Features
 
-| Argument                                | Description                                                                     |
-| --------------------------------------- | ------------------------------------------------------------------------------- |
-| `-r RATE` or `--rate RATE`              | Set a custom framerate limit (default: 60).                                     |
-| `--with-eac`                            | Run game with EAC (Use it at your own risk)                                     |
-| `--fix-camera`                          | Disable camera auto-rotation.                                                   |
-| `--all`                                 | Enable all options except `--rate` and<br>gameplay changes like `--fix-camera`. |
-| `-u` or `--ultrawide`                   | Remove black bars.                                                              |
-| `-v` or `--disable-vigniette`           | Remove the vigniette overlay .                                                  |
-| `-c` or `--disable-ca`                  | Disable chromatic abberation.                                                   |
-| `-a` or `--increase-animation-distance` | Fix low frame rate animations at screen<br>edges or for distant entities.       |
-| `-s` or `--skip-intro`                  | Skip intro logos at game start.                                                 |
-| `-f` or `--remove-60hz-fullscreen`      | Remove the 60Hz limit in fullscreen<br>mode (not needed with proton).           |
+| Argument                                | Description                                                                                               |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `-r RATE` or `--rate RATE`              | Set a custom framerate limit (default: 60).                                                               |
+| `--with-eac`                            | Run game with EAC (Use it at your own risk)                                                               |
+| `--fix-camera`                          | Disable camera auto-rotation.                                                                             |
+| `--disable-rune-loss`                   | Disable losing runes upon death.                                                                          |
+| `--all`                                 | Enable all options except `--rate` and<br>gameplay changes like `--fix-camera` and `--disable-rune-loss`. |
+| `-u` or `--ultrawide`                   | Remove black bars.                                                                                        |
+| `-v` or `--disable-vigniette`           | Remove the vigniette overlay .                                                                            |
+| `-c` or `--disable-ca`                  | Disable chromatic abberation.                                                                             |
+| `-a` or `--increase-animation-distance` | Fix low frame rate animations at screen<br>edges or for distant entities.                                 |
+| `-s` or `--skip-intro`                  | Skip intro logos at game start.                                                                           |
+| `-f` or `--remove-60hz-fullscreen`      | Remove the 60Hz limit in fullscreen<br>mode (not needed with proton).                                     |
 
 
 ## Windows Support
@@ -58,4 +59,6 @@ When the game is launched through steam, the tool creates a patched version of `
   - vigniette and ca removal
   - animation distance increase
 - [DarkSouls3RemoveIntroScreens](https://github.com/bladecoding/DarkSouls3RemoveIntroScreens): intro logo skip
-- [EldenRingMods](https://github.com/techiew/EldenRingMods) + [EldenRingFpsUnlockAndMore](https://github.com/uberhalit/EldenRingFpsUnlockAndMore): camera fix
+- [EldenRingMods](https://github.com/techiew/EldenRingMods) + [EldenRingFpsUnlockAndMore](https://github.com/uberhalit/EldenRingFpsUnlockAndMore)
+  - camera fix
+  - disable rune loss
