@@ -15,7 +15,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 
 1. Copy the file `er-patcher` to the game directory.
 2. In steam, set the game launch options to `python er-patcher ARGS -- %command%` See [Features](#features) for available options.
-  - Example: `python er-patcher --all --rate 30 --fix-camera -- %command%`
+  - Example: `python er-patcher --all --rate 30 --disable-rune-loss -- %command%`
   - Example using [MangoHud](https://github.com/flightlessmango/MangoHud) and wine fullscreen FSR: `python er-patcher --rate 144 -uvca -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
 3. Launch the game through steam. `er-patcher` automatically launches a patched version of `eldenring.exe` with EAC disabled.
 
@@ -27,9 +27,8 @@ Note: There might be some distros (e.g. older Ubuntu releases) that launch pytho
 | --------------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | `-r RATE` or `--rate RATE`              | Set a custom framerate limit (default: 60).                                                               |
 | `--with-eac`                            | Run game with EAC (Use it at your own risk)                                                               |
-| `--fix-camera`                          | Disable camera auto-rotation.                                                                             |
 | `--disable-rune-loss`                   | Disable losing runes upon death.                                                                          |
-| `--all`                                 | Enable all options except `--rate` and<br>gameplay changes like `--fix-camera` and `--disable-rune-loss`. |
+| `--all`                                 | Enable all options except `--rate` and<br>gameplay changes like `--disable-rune-loss`.                    |
 | `-u` or `--ultrawide`                   | Remove black bars.                                                                                        |
 | `-v` or `--disable-vigniette`           | Remove the vigniette overlay .                                                                            |
 | `-c` or `--disable-ca`                  | Disable chromatic abberation.                                                                             |
@@ -60,5 +59,4 @@ When the game is launched through steam, the tool creates a patched version of `
   - animation distance increase
 - [DarkSouls3RemoveIntroScreens](https://github.com/bladecoding/DarkSouls3RemoveIntroScreens): intro logo skip
 - [EldenRingMods](https://github.com/techiew/EldenRingMods) + [EldenRingFpsUnlockAndMore](https://github.com/uberhalit/EldenRingFpsUnlockAndMore)
-  - camera fix
   - disable rune loss
