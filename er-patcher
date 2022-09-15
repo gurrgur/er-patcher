@@ -16,21 +16,39 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description="Patch Elden Ring executable and launch it without EAC.")
     
-    parser.add_argument("-r", "--rate", type=int, default=60, help="Modify the frame rate limit (e.g. 30, 120, 165 or whatever).")
-    parser.add_argument("--with-eac", action='store_true', help="Run game with EAC (Use at own your risk)")
-    parser.add_argument("--disable-rune-loss", action='store_true', help="Disable losing runes upon death.")
-    parser.add_argument("--all", action='store_true', help="Enable all options except rate adjustment and gamplay changes like `--disable-rune-loss`.")
-    parser.add_argument("-u", "--ultrawide", action='store_true', help="Removes black bars when using a resolution with an aspect ratio other than 16:9.")
-    parser.add_argument("-v", "--disable-vigniette", action='store_true', help="Disables the vigniette overlay.")
-    parser.add_argument("-c", "--disable-ca", action='store_true', help="Disables chromatic abberation.")
+    parser.add_argument("--all", action='store_true', help="Enable all options but frame rate adjustment and gameplay changes like `--disable-rune-loss`.")
+    parser.add_argument("-l", "--disable-rune-loss", action='store_true', help="Disable losing runes upon death.")
     parser.add_argument("-a", "--increase-animation-distance", action='store_true', help="Increase animation distance.")
+    parser.add_argument("-r", "--rate", type=int, default=60, help="Change the frame rate limit to any value.")
+    parser.add_argument("-f", "--remove-60-hz-fullscreen", action='store_true', help="Remove 60 Hz lock in fullscreen.")
+    parser.add_argument("-c", "--remove-ca", action='store_true', help="Remove chromatic abberation.")
+    parser.add_argument("-v", "--remove-vignette", action='store_true', help="Remove the vignette.")
     parser.add_argument("-s", "--skip-intro", action='store_true', help="Skip intro logos.")
-    parser.add_argument("-f", "--remove-60hz-fullscreen", action='store_true', help="Remove 60hz lock in fullscreen.")
+    parser.add_argument("-u", "--ultrawide", action='store_true', help="Remove black bars in resolutions without a 16:9 aspect ratio.")
+    parser.add_argument("-w", "--with-eac", action='store_true', help="Run the game with EAC; use at own your risk.")
     patch = parser.parse_args(patcher_args)
 
     game_dir = Path(".")
     with open(game_dir / "eldenring.exe", "rb") as f:
         exe_hex = f.read().hex()
+
+if patch.disable_rune_loss:
+        rl_pattern = "b0 01 .. 8b .. e8 .. .. .. .. .. 8b .. .. .. 32 c0 .. 83 .. 28 c3".replace(" ", "")
+        if (res := re.search(rl_pattern, exe_hex)) is not None:
+            rl_addr = res.span()[0] + 6
+            rl_patch = "90 90 90 90 90".replace(" ", "") # NOP
+            exe_hex = exe_hex[:rl_addr] + rl_patch + exe_hex[rl_addr + len(rl_patch):]
+        else:
+            print("er-patcher: disable rune loss pattern scan failed")
+
+if patch.increase_animation_distance or patch.all:
+        iad_pattern = "e8 .. .. .. .. 0f 28 .. 0f 28 .. e8 .. .. .. .. f3 0f .. .. 0f 28 .. f3 41 0f 5e 4c 24 54".replace(" ", "")
+        if (res := re.search(iad_pattern, exe_hex)) is not None:
+            iad_addr = res.span()[0] + 46
+            iad_patch = "0f 57 c9 66 0f ef c9".replace(" ", "")  # DIVSS XMM1,dword ptr [R12 + 0x54]  ->  XORPS XMM1,XMM1; PXOR XMM1,XMM1
+            exe_hex = exe_hex[:iad_addr] + iad_patch + exe_hex[iad_addr + len(iad_patch):]
+        else:
+            print("er-patcher: increase_animation_distance pattern scan failed")
 
     if patch.rate != 60 and patch.rate > 0:
         r_pattern = "c7 43 20 89 88 88 3c eb 43 89 73 18 eb ca 89 73 18".replace(" ", "")
@@ -40,35 +58,17 @@ if __name__ == "__main__":
             exe_hex = exe_hex[:r_addr] + r_patch + exe_hex[r_addr + len(r_patch):]
         else:
             print("er-patcher: rate pattern scan failed")
-
-    if patch.disable_rune_loss:
-        rl_pattern = "b0 01 .. 8b .. e8 .. .. .. .. .. 8b .. .. .. 32 c0 .. 83 .. 28 c3".replace(" ", "")
-        if (res := re.search(rl_pattern, exe_hex)) is not None:
-            rl_addr = res.span()[0] + 6
-            rl_patch = "90 90 90 90 90".replace(" ", "") # NOP
-            exe_hex = exe_hex[:rl_addr] + rl_patch + exe_hex[rl_addr + len(rl_patch):]
+    
+    if patch.remove_60_hz_fullscreen or patch.all:
+        fs_pattern = "c7 45 ef 3c 00 00 00".replace(" ", "")
+        if (res := re.search(fs_pattern, exe_hex)) is not None:
+            fs_addr = res.span()[0] + 6
+            fs_patch = "00"
+            exe_hex = exe_hex[:fs_addr] + fs_patch + exe_hex[fs_addr + len(fs_patch):]
         else:
-            print("er-patcher: disable rune loss pattern scan failed")
+            print("er-patcher: remove_60_hz_fullscreen pattern scan failed")
 
-    if patch.ultrawide or patch.all:
-        uw_pattern = "74 4f 45 8b 94 cc".replace(" ", "")
-        if (res := re.search(uw_pattern, exe_hex)) is not None:
-            uw_addr = res.span()[0]
-            uw_patch = "eb"
-            exe_hex = exe_hex[:uw_addr] + uw_patch + exe_hex[uw_addr + len(uw_patch):]
-        else:
-            print("er-patcher: ultrawide pattern scan failed")
-
-    if patch.disable_vigniette or patch.all:
-        v_pattern = 'f3 0f 10 .. .. f3 0f 59 .. .. .. .. .. e8 .. .. .. .. f3 41 0f .. .. f3 45 0f .. .. 4c 8d .. .. .. .. .. .. 48'.replace(" ", "")
-        if (res := re.search(v_pattern, exe_hex)) is not None:
-            v_addr = res.span()[0] + 46
-            v_patch = "f3 0f 5c c0 90".replace(" ", "")  # SUBSS XMM0,XMM0; NOP;  all NOP does work too
-            exe_hex = exe_hex[:v_addr] + v_patch + exe_hex[v_addr + len(v_patch):]
-        else:
-            print("er-patcher: disable_vigniette pattern scan failed")
-
-    if patch.disable_ca or patch.all:
+    if patch.remove_ca or patch.all:
         ca_pattern = "0f 11 43 60 48 8d 8b 80 00 00 00 0f 10 87 a0 00 00 00 0f 11 41 f0 48 8d 87 b0 00 00 00 0f 10 08 0f 11 09".replace(" ", "")
         if (res := re.search(ca_pattern, exe_hex)) is not None:
             ca_addr = res.span()[0] + 94
@@ -77,16 +77,16 @@ if __name__ == "__main__":
             if exe_hex[ca_addr:ca_addr + len(ca_patch)] == ca_orig:
                 exe_hex = exe_hex[:ca_addr] + ca_patch + exe_hex[ca_addr + len(ca_patch):]
         else:
-            print("er-patcher: disable_ca pattern scan failed")
+            print("er-patcher: remove_ca pattern scan failed")
 
-    if patch.increase_animation_distance or patch.all:
-        iad_pattern = "e8 .. .. .. .. 0f 28 .. 0f 28 .. e8 .. .. .. .. f3 0f .. .. 0f 28 .. f3 41 0f 5e 4c 24 54".replace(" ", "")
-        if (res := re.search(iad_pattern, exe_hex)) is not None:
-            iad_addr = res.span()[0] + 46
-            iad_patch = "0f 57 c9 66 0f ef c9".replace(" ", "")  # DIVSS XMM1,dword ptr [R12 + 0x54]  ->  XORPS XMM1,XMM1; PXOR XMM1,XMM1
-            exe_hex = exe_hex[:iad_addr] + iad_patch + exe_hex[iad_addr + len(iad_patch):]
+    if patch.remove_vignette or patch.all:
+        v_pattern = 'f3 0f 10 .. .. f3 0f 59 .. .. .. .. .. e8 .. .. .. .. f3 41 0f .. .. f3 45 0f .. .. 4c 8d .. .. .. .. .. .. 48'.replace(" ", "")
+        if (res := re.search(v_pattern, exe_hex)) is not None:
+            v_addr = res.span()[0] + 46
+            v_patch = "f3 0f 5c c0 90".replace(" ", "")  # SUBSS XMM0,XMM0; NOP;  all NOP does work too
+            exe_hex = exe_hex[:v_addr] + v_patch + exe_hex[v_addr + len(v_patch):]
         else:
-            print("er-patcher: increase_animation_distance pattern scan failed")
+            print("er-patcher: remove_vignette pattern scan failed")
 
     if patch.skip_intro or patch.all:
         si_pattern = "80 bf b8 00 00 00 00 74 53 48".replace(" ", "")
@@ -96,16 +96,16 @@ if __name__ == "__main__":
             exe_hex = exe_hex[:si_addr] + si_patch + exe_hex[si_addr + len(si_patch):]
         else:
             print("er-patcher: skip_intro pattern scan failed")
-    
-    if patch.remove_60hz_fullscreen or patch.all:
-        fs_pattern = "c7 45 ef 3c 00 00 00".replace(" ", "")
-        if (res := re.search(fs_pattern, exe_hex)) is not None:
-            fs_addr = res.span()[0] + 6
-            fs_patch = "00"
-            exe_hex = exe_hex[:fs_addr] + fs_patch + exe_hex[fs_addr + len(fs_patch):]
-        else:
-            print("er-patcher: remove_60hz_fullscreen pattern scan failed")
 
+    if patch.ultrawide or patch.all:
+        uw_pattern = "74 4f 45 8b 94 cc".replace(" ", "")
+        if (res := re.search(uw_pattern, exe_hex)) is not None:
+            uw_addr = res.span()[0]
+            uw_patch = "eb"
+            exe_hex = exe_hex[:uw_addr] + uw_patch + exe_hex[uw_addr + len(uw_patch):]
+        else:
+            print("er-patcher: ultrawide pattern scan failed")
+    
     game_dir_patched = Path("er-patcher-tmp")
     if not game_dir_patched.is_dir():
         game_dir_patched.mkdir()
@@ -124,7 +124,7 @@ if __name__ == "__main__":
              (game_dir_patched / d).mkdir(parents=True)
 
     # hard link game files to game_dir_patched; symbolic links would be easier
-    # to handle but by default windows 10 doesn't allow them
+    # to handle, but Windows 10 does not allow them by default
     game_files = [f for f in game_dir.rglob("*") if f.is_file()]
     for f in game_files:
         if f.name in ["eldenring.exe", "er-patcher"]:
