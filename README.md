@@ -1,7 +1,7 @@
 # Elden Ring Proton Patcher
 Elden Ring enhancement patches (custom frame rate limits, ultrawide support etc.) seamlessly integrated with Steam.
 
-Elden Ring Proton Patcher aims to enhance the experience when playing the game on Linux via Proton and Windows. It safely patches `eldenring.exe`, which is created in a temporary subdirectory and deleted on shutdown, via hex-edits, ensuring the patched executable is not run with EAC if no `--with-eac` flag is set. Use at your own risk.
+Elden Ring Proton Patcher aims to enhance the experience when playing the game on Linux via Proton and Windows. It safely patches `eldenring.exe`, which is created in a temporary subdirectory and deleted on shutdown, via hex-edits, ensuring the patched executable is not run with EAC if no `--with-eac` flag is set. Use it at your own risk.
 
 ## Dependencies
 - Python ≥ 3.8
@@ -27,7 +27,7 @@ Note: Some distros (e.g., older Ubuntu versions) launch Python 2 instead of 3 wh
 | `-v` or `--remove-vignette` | Remove the vignette. |
 | `-s` or `--skip-intro` | Skip intro logos on startup. |
 | `-u` or `--ultrawide` | Remove black bars in non 16:9 screens. |
-| `--with-eac` | Run the game with EAC (use at your own risk). |
+| `--with-eac` | Run the game with EAC (use it at your own risk). |
 
 ## Windows support
 The tool works just as well on Windows. This launch option line works if you installed Python from Microsoft Store:
