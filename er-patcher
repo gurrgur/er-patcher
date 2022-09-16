@@ -14,18 +14,18 @@ if __name__ == "__main__":
 
     patcher_args = sys.argv[1:sys.argv.index("--")]
     
-    parser = argparse.ArgumentParser(description="Patch Elden Ring executable and launch it without EAC.")
+    parser = argparse.ArgumentParser(description="Patch `eldenring.exe` and launch it without EAC.")
     
-    parser.add_argument("--all", action='store_true', help="Enable all options but frame rate adjustment and gameplay changes like `--disable-rune-loss`.")
-    parser.add_argument("-l", "--disable-rune-loss", action='store_true', help="Disable losing runes upon death.")
-    parser.add_argument("-a", "--increase-animation-distance", action='store_true', help="Increase animation distance.")
-    parser.add_argument("-r", "--rate", type=int, default=60, help="Change the frame rate limit to any value.")
-    parser.add_argument("-f", "--remove-60-hz-fullscreen", action='store_true', help="Remove 60 Hz lock in fullscreen.")
+    parser.add_argument("--all", action='store_true', help="Enable all options but `--rate` and gameplay changes like `--disable-rune-loss`.")
+    parser.add_argument("-l", "--disable-rune-loss", action='store_true', help="Disable rune loss on death.")
+    parser.add_argument("-a", "--increase-animation-distance", action='store_true', help="Fix low frame rate animations for distant entities or at screen edges.")
+    parser.add_argument("-r", "--rate", type=int, default=60, help="Set a custom frame rate limit (default: 60).")
+    parser.add_argument("-f", "--remove-60-hz-fullscreen", action='store_true', help="Remove 60 Hz lock in fullscreen (unneeded in Proton).")
     parser.add_argument("-c", "--remove-ca", action='store_true', help="Remove chromatic abberation.")
     parser.add_argument("-v", "--remove-vignette", action='store_true', help="Remove the vignette.")
-    parser.add_argument("-s", "--skip-intro", action='store_true', help="Skip intro logos.")
-    parser.add_argument("-u", "--ultrawide", action='store_true', help="Remove black bars in resolutions without a 16:9 aspect ratio.")
-    parser.add_argument("-w", "--with-eac", action='store_true', help="Run the game with EAC; use at own your risk.")
+    parser.add_argument("-s", "--skip-intro", action='store_true', help="Skip intro logos on startup.")
+    parser.add_argument("-u", "--ultrawide", action='store_true', help="Remove black bars in non 16:9 screens.")
+    parser.add_argument("-w", "--with-eac", action='store_true', help="Run the game with EAC (use at own your risk).")
     patch = parser.parse_args(patcher_args)
 
     game_dir = Path(".")
