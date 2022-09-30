@@ -16,6 +16,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 1. Copy the file `er-patcher` to the game directory.
 2. In steam, set the game launch options to `python er-patcher ARGS -- %command%` See [Features](#features) for available options.
   - Example: `python er-patcher --all --rate 30 --disable-rune-loss -- %command%`
+  - Example using the [seamless co-op](https://www.nexusmods.com/eldenring/mods/510) mod: `python er-patcher --all --executable launch_elden_ring_seamlesscoop.exe -- %command%`
   - Example using [MangoHud](https://github.com/flightlessmango/MangoHud) and wine fullscreen FSR: `python er-patcher --rate 144 -uvca -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
 3. Launch the game through steam. `er-patcher` automatically launches a patched version of `eldenring.exe` with EAC disabled.
 
@@ -26,11 +27,12 @@ Note: There might be some distros (e.g. older Ubuntu releases) that launch pytho
 | Argument                                | Description                                                                                               |
 | --------------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | `-r RATE` or `--rate RATE`              | Set a custom framerate limit (default: 60).                                                               |
-| `--with-eac`                            | Run game with EAC (Use it at your own risk)                                                               |
+| `-x EXE` or `--executable EXE`          | The executable to launch, relative to the games folder.<br>Mutually exclusive with `--with-eac`.          |
+| `--with-eac`                            | Run game with EAC (Use it at your own risk).<br>Mutually exclusive with `--executable`.                   |
 | `--disable-rune-loss`                   | Disable losing runes upon death.                                                                          |
-| `--all`                                 | Enable all options except `--rate` and<br>gameplay changes like `--disable-rune-loss`.                    |
+| `--all`                                 | Enable all options except `--rate`, `--executable`, and<br>gameplay changes like `--disable-rune-loss`.   |
 | `-u` or `--ultrawide`                   | Remove black bars.                                                                                        |
-| `-v` or `--disable-vigniette`           | Remove the vigniette overlay .                                                                            |
+| `-v` or `--disable-vigniette`           | Remove the vigniette overlay.                                                                             |
 | `-c` or `--disable-ca`                  | Disable chromatic abberation.                                                                             |
 | `-a` or `--increase-animation-distance` | Fix low frame rate animations at screen<br>edges or for distant entities.                                 |
 | `-s` or `--skip-intro`                  | Skip intro logos at game start.                                                                           |
