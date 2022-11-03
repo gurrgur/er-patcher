@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import os
 import sys
 import subprocess
 import argparse
@@ -13,11 +12,12 @@ from shutil import rmtree
 if __name__ == "__main__":
 
     patcher_args = sys.argv[1:sys.argv.index("--")]
-    
-    parser = argparse.ArgumentParser(description="Patch `eldenring.exe` and launch it without EAC.")
-    
+
+    parser = argparse.ArgumentParser(description="Patch `eldenring.exe` and run it without EAC.")
+
     parser.add_argument("--all", action='store_true', help="Enable all options but `--rate` and gameplay changes like `--disable-rune-loss`.")
     parser.add_argument("-l", "--disable-rune-loss", action='store_true', help="Disable rune loss on death.")
+    parser.add_argument("-x", "--executable", action='store', type=str, default="eldenring.exe", help="Set the executable to run, relative to the game's folder.")
     parser.add_argument("-a", "--increase-animation-distance", action='store_true', help="Fix low frame rate animations for distant entities or at screen edges.")
     parser.add_argument("-r", "--rate", type=int, default=60, help="Set a custom frame rate limit (default: 60).")
     parser.add_argument("-f", "--remove-60-hz-fullscreen", action='store_true', help="Remove 60 Hz lock in fullscreen (unneeded in Proton).")
@@ -28,6 +28,10 @@ if __name__ == "__main__":
     parser.add_argument("-w", "--with-eac", action='store_true', help="Run the game with EAC (use it at own your risk).")
     patch = parser.parse_args(patcher_args)
 
+ if patch.with_eac and patch.executable != "eldenring.exe":
+        print("er-patcher: --with-eac is mutually exclusive with --executable")
+        sys.exit(1)
+
     game_dir = Path(".")
     with open(game_dir / "eldenring.exe", "rb") as f:
         exe_hex = f.read().hex()
@@ -36,7 +40,7 @@ if patch.disable_rune_loss:
         rl_pattern = "b0 01 .. 8b .. e8 .. .. .. .. .. 8b .. .. .. 32 c0 .. 83 .. 28 c3".replace(" ", "")
         if (res := re.search(rl_pattern, exe_hex)) is not None:
             rl_addr = res.span()[0] + 6
-            rl_patch = "90 90 90 90 90".replace(" ", "") # NOP
+            rl_patch = "90 90 90 90 90".replace(" ", "")  # NOP
             exe_hex = exe_hex[:rl_addr] + rl_patch + exe_hex[rl_addr + len(rl_patch):]
         else:
             print("er-patcher: disable rune loss pattern scan failed")
@@ -58,7 +62,7 @@ if patch.increase_animation_distance or patch.all:
             exe_hex = exe_hex[:r_addr] + r_patch + exe_hex[r_addr + len(r_patch):]
         else:
             print("er-patcher: rate pattern scan failed")
-    
+
     if patch.remove_60_hz_fullscreen or patch.all:
         fs_pattern = "c7 45 ef 3c 00 00 00".replace(" ", "")
         if (res := re.search(fs_pattern, exe_hex)) is not None:
@@ -105,7 +109,7 @@ if patch.increase_animation_distance or patch.all:
             exe_hex = exe_hex[:uw_addr] + uw_patch + exe_hex[uw_addr + len(uw_patch):]
         else:
             print("er-patcher: ultrawide pattern scan failed")
-    
+
     game_dir_patched = Path("er-patcher-tmp")
     if not game_dir_patched.is_dir():
         game_dir_patched.mkdir()
@@ -121,20 +125,20 @@ if patch.increase_animation_distance or patch.all:
         if d == game_dir_patched:
             continue
         if not (game_dir_patched / d).is_dir():
-             (game_dir_patched / d).mkdir(parents=True)
+            (game_dir_patched / d).mkdir(parents=True)
 
     # hard link game files to game_dir_patched; symbolic links would be easier
     # to handle, but Windows 10 does not allow them by default
     game_files = [f for f in game_dir.rglob("*") if f.is_file()]
     for f in game_files:
         if f.name in ["eldenring.exe", "er-patcher"]:
-            continue 
+            continue
         if not (game_dir_patched / f).is_file():
-             f.link_to(game_dir_patched / f)
+            f.link_to(game_dir_patched / f)
 
-    # start patched exe directly to avoid EAC
+    # run patched exe directly to avoid EAC
     steam_cmd = sys.argv[1 + sys.argv.index("--"):]
-    steam_cmd[-1] = Path(steam_cmd[-1]).parent.absolute() / game_dir_patched / ("start_protected_game.exe" if patch.with_eac else "eldenring.exe")
+    steam_cmd[-1] = Path(steam_cmd[-1]).parent.absolute() / game_dir_patched / ("start_protected_game.exe" if patch.with_eac else "patch.executable")
     subprocess.run(steam_cmd, cwd=steam_cmd[-1].parent.absolute())
 
     # cleanup
