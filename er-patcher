@@ -21,7 +21,7 @@ if __name__ == "__main__":
     parser.add_argument("--disable-rune-loss", action='store_true', help="Disable losing runes upon death.")
     parser.add_argument("--all", action='store_true', help="Enable all options except rate adjustment and gamplay changes like `--disable-rune-loss`.")
     parser.add_argument("-u", "--ultrawide", action='store_true', help="Removes black bars when using a resolution with an aspect ratio other than 16:9.")
-    parser.add_argument("-v", "--disable-vigniette", action='store_true', help="Disables the vigniette overlay.")
+    parser.add_argument("-v", "--disable-vignette", action='store_true', help="Disables the vignette overlay.")
     parser.add_argument("-c", "--disable-ca", action='store_true', help="Disables chromatic abberation.")
     parser.add_argument("-a", "--increase-animation-distance", action='store_true', help="Increase animation distance.")
     parser.add_argument("-s", "--skip-intro", action='store_true', help="Skip intro logos.")
@@ -63,14 +63,14 @@ if __name__ == "__main__":
         else:
             print("er-patcher: ultrawide pattern scan failed")
 
-    if patch.disable_vigniette or patch.all:
+    if patch.disable_vignette or patch.all:
         v_pattern = 'f3 0f 10 .. .. f3 0f 59 .. .. .. .. .. e8 .. .. .. .. f3 41 0f .. .. f3 45 0f .. .. 4c 8d .. .. .. .. .. .. 48'.replace(" ", "")
         if (res := re.search(v_pattern, exe_hex)) is not None:
             v_addr = res.span()[0] + 46
             v_patch = "f3 0f 5c c0 90".replace(" ", "")  # SUBSS XMM0,XMM0; NOP;  all NOP does work too
             exe_hex = exe_hex[:v_addr] + v_patch + exe_hex[v_addr + len(v_patch):]
         else:
-            print("er-patcher: disable_vigniette pattern scan failed")
+            print("er-patcher: disable_vignette pattern scan failed")
 
     if patch.disable_ca or patch.all:
         ca_pattern = "0f 11 43 60 48 8d 8b 80 00 00 00 0f 10 87 a0 00 00 00 0f 11 41 f0 48 8d 87 b0 00 00 00 0f 10 08 0f 11 09".replace(" ", "")

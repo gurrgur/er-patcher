@@ -32,7 +32,7 @@ Note: There might be some distros (e.g. older Ubuntu releases) that launch pytho
 | `--disable-rune-loss`                   | Disable losing runes upon death.                                                                          |
 | `--all`                                 | Enable all options except `--rate`, `--executable`, and<br>gameplay changes like `--disable-rune-loss`.   |
 | `-u` or `--ultrawide`                   | Remove black bars.                                                                                        |
-| `-v` or `--disable-vigniette`           | Remove the vigniette overlay.                                                                             |
+| `-v` or `--disable-vignette`           | Remove the vignette overlay.                                                                             |
 | `-c` or `--disable-ca`                  | Disable chromatic abberation.                                                                             |
 | `-a` or `--increase-animation-distance` | Fix low frame rate animations at screen<br>edges or for distant entities.                                 |
 | `-s` or `--skip-intro`                  | Skip intro logos at game start.                                                                           |
@@ -57,7 +57,7 @@ When the game is launched through steam, the tool creates a patched version of `
   - frame time limit adjustment
   - black bar removal
 - [Flawless Widescreen](https://www.flawlesswidescreen.org)
-  - vigniette and ca removal
+  - vignette and ca removal
   - animation distance increase
 - [DarkSouls3RemoveIntroScreens](https://github.com/bladecoding/DarkSouls3RemoveIntroScreens): intro logo skip
 - [EldenRingMods](https://github.com/techiew/EldenRingMods) + [EldenRingFpsUnlockAndMore](https://github.com/uberhalit/EldenRingFpsUnlockAndMore)
