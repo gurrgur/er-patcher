@@ -13,19 +13,19 @@ if __name__ == "__main__":
 
     patcher_args = sys.argv[1:sys.argv.index("--")]
 
-    parser = argparse.ArgumentParser(description="Patch Elden Ring executable and launch it without EAC.")
+    parser = argparse.ArgumentParser(description="Patch `eldenring.exe` and run it without EAC.")
 
-    parser.add_argument("-r", "--rate", type=int, default=60, help="change the frame rate limit (like 30, 120, 165 or whatever).")
+    parser.add_argument("-r", "--rate", type=int, default=60, help="Set a custom frame rate limit (default: 60).")
     parser.add_argument("-x", "--executable", action='store', type=str, default="eldenring.exe", help="The executable to run, relative to the game's folder.")
-    parser.add_argument("--with-eac", action='store_true', help="Run game with EAC (use it at own your risk)")
+    parser.add_argument("--with-eac", action='store_true', help="Run game with EAC (use it at own your risk).")
     parser.add_argument("--disable-rune-loss", action='store_true', help="Disable rune loss upon death.")
-    parser.add_argument("--all", action='store_true', help="Enable all options but frame rate adjustment and gameplay changes like `--disable-rune-loss`.")
+    parser.add_argument("--all", action='store_true', help="Enable all options but `--rate` and gameplay changes like `--disable-rune-loss`.")
     parser.add_argument("-u", "--ultrawide", action='store_true', help="Remove black bars on non-16:9 aspect ratios.")
-    parser.add_argument("-v", "--disable-vignette", action='store_true', help="Disable the vignette overlay.")
-    parser.add_argument("-c", "--disable-ca", action='store_true', help="Disable chromatic aberration.")
-    parser.add_argument("-a", "--increase-animation-distance", action='store_true', help="Increase animation distance.")
-    parser.add_argument("-s", "--skip-intro", action='store_true', help="Skip intro logos.")
-    parser.add_argument("-f", "--remove-60hz-fullscreen", action='store_true', help="Remove 60 Hz lock in fullscreen.")
+    parser.add_argument("-v", "--disable-vignette", action='store_true', help="Remove the vignette.")
+    parser.add_argument("-c", "--disable-ca", action='store_true', help="Remove chromatic aberration.")
+    parser.add_argument("-a", "--increase-animation-distance", action='store_true', help="Fix low frame rate animations for distant entities or at screen edges.")
+    parser.add_argument("-s", "--skip-intro", action='store_true', help="Skip intro logos on startup.")
+    parser.add_argument("-f", "--remove-60hz-fullscreen", action='store_true', help="Remove 60 Hz lock in fullscreen (unneded on Proton).")
     patch = parser.parse_args(patcher_args)
 
     if patch.with_eac and patch.executable != "eldenring.exe":
@@ -128,7 +128,7 @@ if __name__ == "__main__":
             (game_dir_patched / d).mkdir(parents=True)
 
     # hard link game files to game_dir_patched; symbolic links would be easier
-    # to handle but by default windows 10 doesn't allow them
+    # to handle but windows 10 does not allow them by default
     game_files = [f for f in game_dir.rglob("*") if f.is_file()]
     for f in game_files:
         if f.name in ["eldenring.exe", "er-patcher"]:
@@ -136,7 +136,7 @@ if __name__ == "__main__":
         if not (game_dir_patched / f).is_file():
             f.link_to(game_dir_patched / f)
 
-    # start patched exe directly to avoid EAC
+    # run patched exe directly to avoid EAC
     steam_cmd = sys.argv[1 + sys.argv.index("--"):]
     steam_cmd[-1] = Path(steam_cmd[-1]).parent.absolute() / game_dir_patched / ("start_protected_game.exe" if patch.with_eac else patch.executable)
     subprocess.run(steam_cmd, cwd=steam_cmd[-1].parent.absolute())
