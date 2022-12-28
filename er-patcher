@@ -15,17 +15,17 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Patch Elden Ring executable and launch it without EAC.")
 
-    parser.add_argument("-r", "--rate", type=int, default=60, help="Modify the frame rate limit (e.g. 30, 120, 165 or whatever).")
-    parser.add_argument("-x", "--executable", action='store', type=str, default="eldenring.exe", help="The executable to launch, relative to the games folder.")
-    parser.add_argument("--with-eac", action='store_true', help="Run game with EAC (Use at own your risk)")
-    parser.add_argument("--disable-rune-loss", action='store_true', help="Disable losing runes upon death.")
-    parser.add_argument("--all", action='store_true', help="Enable all options except rate adjustment and gamplay changes like `--disable-rune-loss`.")
-    parser.add_argument("-u", "--ultrawide", action='store_true', help="Removes black bars when using a resolution with an aspect ratio other than 16:9.")
-    parser.add_argument("-v", "--disable-vignette", action='store_true', help="Disables the vignette overlay.")
-    parser.add_argument("-c", "--disable-ca", action='store_true', help="Disables chromatic abberation.")
+    parser.add_argument("-r", "--rate", type=int, default=60, help="change the frame rate limit (like 30, 120, 165 or whatever).")
+    parser.add_argument("-x", "--executable", action='store', type=str, default="eldenring.exe", help="The executable to run, relative to the game's folder.")
+    parser.add_argument("--with-eac", action='store_true', help="Run game with EAC (use it at own your risk)")
+    parser.add_argument("--disable-rune-loss", action='store_true', help="Disable rune loss upon death.")
+    parser.add_argument("--all", action='store_true', help="Enable all options but frame rate adjustment and gameplay changes like `--disable-rune-loss`.")
+    parser.add_argument("-u", "--ultrawide", action='store_true', help="Remove black bars on non-16:9 aspect ratios.")
+    parser.add_argument("-v", "--disable-vignette", action='store_true', help="Disable the vignette overlay.")
+    parser.add_argument("-c", "--disable-ca", action='store_true', help="Disable chromatic aberration.")
     parser.add_argument("-a", "--increase-animation-distance", action='store_true', help="Increase animation distance.")
     parser.add_argument("-s", "--skip-intro", action='store_true', help="Skip intro logos.")
-    parser.add_argument("-f", "--remove-60hz-fullscreen", action='store_true', help="Remove 60hz lock in fullscreen.")
+    parser.add_argument("-f", "--remove-60hz-fullscreen", action='store_true', help="Remove 60 Hz lock in fullscreen.")
     patch = parser.parse_args(patcher_args)
 
     if patch.with_eac and patch.executable != "eldenring.exe":
