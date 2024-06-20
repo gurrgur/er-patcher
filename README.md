@@ -47,6 +47,8 @@ The patcher works just as well on windows. The following launch option line work
 
 Note: This spawns a python console which will close by itself after the game has finished running. If you find this annoying you can try using `pythonw` instead. In any case `python` needs to be in PATH for windows to find it.
 
+Note 2: Ensure Vertical Sync is turned off for Elden Ring in Nvidia Control Panel / AMD Radeon Software / Intel Graphics Command Center, otherwise the custom framerate limit feature won't work.
+
 ## How it works
 
 When the game is launched through steam, the tool creates a patched version of `eldenring.exe` in a temporary subdirectory while leaving the original intact. As long the flag `--with-eac` is not set, the tool modifies the steam launch command to launch the patched executable instead of `start_protected_game.exe`, thefore ensuring that the patched exe is never run with EAC enabled. After the game is closed, the patched executable is removed.
