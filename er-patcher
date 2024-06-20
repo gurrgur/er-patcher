@@ -37,7 +37,7 @@ if __name__ == "__main__":
         exe_hex = f.read().hex()
 
     if patch.rate != 60 and patch.rate > 0:
-        r_pattern = "c7 43 20 89 88 88 3c eb 43 89 73 18 eb ca 89 73 18".replace(" ", "")
+        r_pattern = "c7 43 1c 89 88 88 3c eb 6d 89 73 18 eb c7 89 73 18".replace(" ", "")
         if (res := re.search(r_pattern, exe_hex)) is not None:
             r_addr = res.span()[0] + 6
             r_patch = struct.pack('<f', 1 / patch.rate).hex()
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     if patch.remove_60hz_fullscreen or patch.all:
         fs_pattern = "c7 45 ef 3c 00 00 00".replace(" ", "")
         if (res := re.search(fs_pattern, exe_hex)) is not None:
-            fs_addr = res.span()[0] + 6
+            fs_addr = res.span()[0] + 3
             fs_patch = "00"
             exe_hex = exe_hex[:fs_addr] + fs_patch + exe_hex[fs_addr + len(fs_patch):]
         else:
