@@ -16,7 +16,7 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 1. Copy the file `er-patcher` to the game directory.
 2. In steam, set the game launch options to `python er-patcher ARGS -- %command%` See [Features](#features) for available options.
   - Example: `python er-patcher --all --rate 30 --disable-rune-loss -- %command%`
-  - Example using the [seamless co-op](https://www.nexusmods.com/eldenring/mods/510) mod: `python er-patcher --all --executable launch_elden_ring_seamlesscoop.exe -- %command%`
+  - Example using the [Seamless Co-op](https://www.nexusmods.com/eldenring/mods/510) mod: `python er-patcher --all --executable ersc_launcher.exe -- %command%`
   - Example using [MangoHud](https://github.com/flightlessmango/MangoHud) and wine fullscreen FSR: `python er-patcher --rate 144 -uvca -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
 3. Launch the game through steam. `er-patcher` automatically launches a patched version of `eldenring.exe` with EAC disabled.
 
