@@ -7,7 +7,17 @@ from pathlib import Path
 import struct
 import re
 from shutil import rmtree
+import os
 
+def cleanup(game_dir_patched):
+    if game_dir_patched.exists():
+        eldenring_path = game_dir_patched / "eldenring.exe"
+        try:
+            if eldenring_path.exists():
+                os.remove(eldenring_path)
+            rmtree(game_dir_patched)
+        except Exception as e:
+            print(f"er-patcher: could not delete {game_dir_patched}: {e}")
 
 if __name__ == "__main__":
 
@@ -115,6 +125,10 @@ if __name__ == "__main__":
             print("er-patcher: remove_60hz_fullscreen pattern scan failed")
 
     game_dir_patched = Path("er-patcher-tmp")
+
+    # make sure a fresh directory is used
+    cleanup(game_dir_patched)
+
     if not game_dir_patched.is_dir():
         game_dir_patched.mkdir()
 
@@ -148,5 +162,5 @@ if __name__ == "__main__":
     steam_cmd[-1] = Path(steam_cmd[-1]).parent.absolute() / game_dir_patched / ("start_protected_game.exe" if patch.with_eac else patch.executable)
     subprocess.run(steam_cmd, cwd=steam_cmd[-1].parent.absolute())
 
-    # cleanup
-    rmtree(game_dir_patched)
+    # try to remove game_dir_patched
+    cleanup(game_dir_patched)
