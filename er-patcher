@@ -8,16 +8,22 @@ import struct
 import re
 from shutil import rmtree
 import os
+import time
 
 def cleanup(game_dir_patched):
     if game_dir_patched.exists():
         eldenring_path = game_dir_patched / "eldenring.exe"
-        try:
-            if eldenring_path.exists():
+        while eldenring_path.exists():
+            try:
                 os.remove(eldenring_path)
-            rmtree(game_dir_patched)
-        except Exception as e:
-            print(f"er-patcher: could not delete {game_dir_patched}: {e}")
+                break
+            except PermissionError:
+                # eldenring.exe is still running, retry in 3 s
+                time.sleep(3)
+            except Exception as e:
+                print(f"er-patcher: could not delete {eldenring_path}: {e}")
+                break
+        rmtree(game_dir_patched)
 
 if __name__ == "__main__":
 
