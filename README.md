@@ -15,9 +15,22 @@ A tool aimed at enhancing the experience when playing the game on linux through 
 
 1. Copy the file `er-patcher` to the game directory.
 2. In steam, set the game launch options to `python er-patcher ARGS -- %command%` See [Features](#features) for available options.
-  - Example: `python er-patcher --all --rate 30 --disable-rune-loss -- %command%`
-  - Example using the [Seamless Co-op](https://www.nexusmods.com/eldenring/mods/510) mod: `python er-patcher --all --executable ersc_launcher.exe -- %command%`
-  - Example using [MangoHud](https://github.com/flightlessmango/MangoHud) and wine fullscreen FSR: `python er-patcher --rate 144 -uvca -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
+  - Example:
+
+    `python er-patcher --all --rate 30 --disable-rune-loss -- %command%`
+
+  - Example using the [Seamless Co-op](https://www.nexusmods.com/eldenring/mods/510) mod:
+
+    `python er-patcher --all --executable ersc_launcher.exe -- %command%`
+
+  - Example using [MangoHud](https://github.com/flightlessmango/MangoHud) and wine fullscreen FSR:
+
+    `python er-patcher --rate 144 -uvca -- env WINE_FULLSCREEN_FSR=1 MANGOHUD=1 MANGOHUD_CONFIG=histogram %command%`
+
+  - Example for enabling HDR using gamescope on Linux (reported to work on Plasma 6.1):
+
+    `ENABLE_GAMESCOPE_WSI=1 DXVK_HDR=1 gamescope -W 3440 -H 1440 -f -r 165 --hdr-enabled -- python er-patcher --all --rate 165 -- %command%`
+    
 3. Launch the game through steam. `er-patcher` automatically launches a patched version of `eldenring.exe` with EAC disabled.
 
 Note: There might be some distros (e.g. older Ubuntu releases) that launch python 2 instead of 3 when running `python`. In that case you'll need to replace `python` with `python3` in the launch option line. 
