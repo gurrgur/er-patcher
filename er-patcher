@@ -42,6 +42,7 @@ if __name__ == "__main__":
     parser.add_argument("-a", "--increase-animation-distance", action='store_true', help="Increase animation distance.")
     parser.add_argument("-s", "--skip-intro", action='store_true', help="Skip intro logos.")
     parser.add_argument("-f", "--remove-60hz-fullscreen", action='store_true', help="Remove 60hz lock in fullscreen.")
+    parser.add_argument("--disable-camera-reset", action='store_true', help="Disable camera reset.")
     patch = parser.parse_args(patcher_args)
 
     if patch.with_eac and patch.executable != "eldenring.exe":
@@ -123,12 +124,21 @@ if __name__ == "__main__":
             fs_addr = res.span()[0] + 10
             fs_patch = "00"
             exe_hex = exe_hex[:fs_addr] + fs_patch + exe_hex[fs_addr + len(fs_patch):]
-            
+
             fs_addr_2 = res.span()[0] + 24
             fs_patch_2 = "00"
             exe_hex = exe_hex[:fs_addr_2] + fs_patch_2 + exe_hex[fs_addr_2 + len(fs_patch_2):]
         else:
             print("er-patcher: remove_60hz_fullscreen pattern scan failed")
+
+    if patch.disable_camera_reset:
+        cr_pattern = "80 .. .. .. .. .. 00 74 .. .. 8b .. e8 .. .. .. .. eb .. 0f 28 .. .. .. .. .. .. 8d".replace(" ", "")
+        if (res := re.search(cr_pattern, exe_hex)) is not None:
+            cr_addr = res.span()[0] + 14
+            cr_patch = "eb"
+            exe_hex = exe_hex[:cr_addr] + cr_patch + exe_hex[cr_addr + len(cr_patch):]
+        else:
+            print("er-patcher: camera reset pattern scan failed")
 
     game_dir_patched = Path("er-patcher-tmp")
 

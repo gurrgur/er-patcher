@@ -30,10 +30,10 @@ A tool aimed at enhancing the experience when playing the game on linux through 
   - Example for enabling HDR using gamescope on Linux (reported to work on Plasma 6.1):
 
     `ENABLE_GAMESCOPE_WSI=1 DXVK_HDR=1 gamescope -W 3440 -H 1440 -f -r 165 --hdr-enabled -- python er-patcher --all --rate 165 -- %command%`
-    
+
 3. Launch the game through steam. `er-patcher` automatically launches a patched version of `eldenring.exe` with EAC disabled.
 
-Note: There might be some distros (e.g. older Ubuntu releases) that launch python 2 instead of 3 when running `python`. In that case you'll need to replace `python` with `python3` in the launch option line. 
+Note: There might be some distros (e.g. older Ubuntu releases) that launch python 2 instead of 3 when running `python`. In that case you'll need to replace `python` with `python3` in the launch option line.
 
 ## Features
 
@@ -50,6 +50,7 @@ Note: There might be some distros (e.g. older Ubuntu releases) that launch pytho
 | `-a` or `--increase-animation-distance` | Fix low frame rate animations at screen<br>edges or for distant entities.                                 |
 | `-s` or `--skip-intro`                  | Skip intro logos at game start.                                                                           |
 | `-f` or `--remove-60hz-fullscreen`      | Remove the 60Hz limit in fullscreen<br>mode (not needed with proton).                                     |
+| `--disable-camera-reset`                | Disable camera reset on target lock input when no target in frame.                                        |
 
 
 ## Windows Support
@@ -77,3 +78,4 @@ When the game is launched through steam, the tool creates a patched version of `
 - [DarkSouls3RemoveIntroScreens](https://github.com/bladecoding/DarkSouls3RemoveIntroScreens): intro logo skip
 - [EldenRingMods](https://github.com/techiew/EldenRingMods) + [EldenRingFpsUnlockAndMore](https://github.com/uberhalit/EldenRingFpsUnlockAndMore)
   - disable rune loss
+  - disable camera reset
