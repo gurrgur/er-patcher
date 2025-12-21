@@ -166,7 +166,14 @@ if __name__ == "__main__":
     # start patched exe directly to avoid EAC
     steam_cmd = sys.argv[1 + sys.argv.index("--"):]
     steam_cmd[-1] = Path(steam_cmd[-1]).parent.absolute() / game_dir_patched / ("start_protected_game.exe" if patch.with_eac else patch.executable)
-    subprocess.run(steam_cmd, cwd=steam_cmd[-1].parent.absolute())
+
+    # disable v-sync if running in fullscreen and on a unix based OS
+    if (patch.remove_60hz_fullscreen or patch.all) and os.name == 'posix':
+        my_env = os.environ.copy()
+        my_env["DXVK_CONFIG"] = "dxgi.syncInterval = 0"
+        subprocess.run(steam_cmd, cwd=steam_cmd[-1].parent.absolute(), env=my_env)
+    else:
+        subprocess.run(steam_cmd, cwd=steam_cmd[-1].parent.absolute())
 
     # try to remove game_dir_patched
     cleanup(game_dir_patched)
